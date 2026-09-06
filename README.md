@@ -23,8 +23,8 @@ neutral evidence file. It makes no judgments; that's the analyzer skills' job.
 ```bash
 cd skills/crawl-render-audit/scripts
 
-python3 -m venv venv
-source venv/bin/activate          # Windows: venv\Scripts\activate
+python -m venv venv
+.\venv\Scripts\Activate.ps1        # Windows: venv\Scripts\activate
 
 pip install -r requirements.txt
 ```
