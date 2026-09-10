@@ -1,0 +1,183 @@
+{
+  "site": "https://aionyix.com",
+  "crawled_at": "2026-09-10T09:57:00.567608+00:00Z",
+  "our_agent": "BrandAuditBot/1.0 (+https://example.org/audit; read-only)",
+  "robots_txt": {
+    "found": true,
+    "rules_by_agent": {
+      "GPTBot": "allowed",
+      "OAI-SearchBot": "allowed",
+      "ChatGPT-User": "allowed",
+      "ClaudeBot": "allowed",
+      "Claude-User": "allowed",
+      "PerplexityBot": "allowed",
+      "CCBot": "allowed",
+      "Google-Extended": "allowed"
+    }
+  },
+  "ua_probe": {
+    "url_tested": "https://aionyix.com",
+    "results": [
+      {
+        "agent": "chrome_baseline",
+        "status_code": 200,
+        "page_size_bytes": 61734,
+        "text_length": 4329,
+        "final_url": "https://aionyix.com",
+        "failure_type": null
+      },
+      {
+        "agent": "GPTBot",
+        "status_code": 200,
+        "page_size_bytes": 61734,
+        "text_length": 4329,
+        "final_url": "https://aionyix.com",
+        "failure_type": null
+      },
+      {
+        "agent": "PerplexityBot",
+        "status_code": 200,
+        "page_size_bytes": 61734,
+        "text_length": 4329,
+        "final_url": "https://aionyix.com",
+        "failure_type": null
+      },
+      {
+        "agent": "ClaudeBot",
+        "status_code": 200,
+        "page_size_bytes": 61734,
+        "text_length": 4329,
+        "final_url": "https://aionyix.com",
+        "failure_type": null
+      }
+    ]
+  },
+  "pages_checked": [
+    {
+      "requested_url": "https://aionyix.com/",
+      "final_url": "https://aionyix.com/",
+      "redirect_count": 0,
+      "status_code": 200,
+      "failure_type": null,
+      "type": "homepage",
+      "visible_text_length": 4329,
+      "script_size": 592,
+      "page_size_bytes": 61734,
+      "title": "Aionyix Solutions",
+      "h1_present": true,
+      "h1_text": "AIONYIX",
+      "has_structured_data": true,
+      "jsonld_block_count": 1,
+      "jsonld_raw": [
+        "{\"@context\":\"https://schema.org\",\"@type\":\"Organization\",\"name\":\"Aionyix Solutions\",\"url\":\"https://aionyix.com\",\"logo\":\"https://aionyix.com/images/aionyix_logo.png\",\"description\":\"We solve the hard problems, scale effortlessly, and turn complexity into simplicity.\",\"founder\":{\"@type\":\"Person\",\"name\":\"Rohit Pardeshi\",\"jobTitle\":\"Founder & CEO\"},\"industry\":\"Software Development\",\"address\":{\"@type\":\"PostalAddress\",\"addressCountry\":\"IN\"}}"
+      ],
+      "meta_robots": "index, follow",
+      "canonical_url": "https://aionyix.com/"
+    },
+    {
+      "requested_url": "https://aionyix.com/technology",
+      "final_url": "https://aionyix.com/technology/",
+      "redirect_count": 1,
+      "status_code": 200,
+      "failure_type": null,
+      "type": "/technology/",
+      "visible_text_length": 3005,
+      "script_size": 800,
+      "page_size_bytes": 38118,
+      "title": "Technology - Aionyix Solutions | Our Tech Stack",
+      "h1_present": true,
+      "h1_text": "AIONYIX",
+      "has_structured_data": true,
+      "jsonld_block_count": 1,
+      "jsonld_raw": [
+        "{\"@context\":\"https://schema.org\",\"@type\":\"AboutPage\",\"name\":\"Technology - Aionyix Solutions\",\"url\":\"https://aionyix.com/technology\",\"description\":\"Explore our enterprise-grade technology stack and development approach.\",\"mainEntity\":{\"@type\":\"Organization\",\"name\":\"Aionyix Solutions\",\"industry\":\"Software Development\",\"description\":\"Building scalable SaaS solutions using enterprise-grade technology.\"},\"breadcrumb\":{\"@type\":\"BreadcrumbList\",\"itemListElement\":[{\"@type\":\"ListItem\",\"position\":1,\"name\":\"Home\",\"item\":\"https://aionyix.com/\"},{\"@type\":\"ListItem\",\"position\":2,\"name\":\"Technology\",\"item\":\"https://aionyix.com/technology\"}]}}"
+      ],
+      "meta_robots": "index, follow",
+      "canonical_url": "https://aionyix.com/technology"
+    },
+    {
+      "requested_url": "https://aionyix.com/team",
+      "final_url": "https://aionyix.com/team/",
+      "redirect_count": 1,
+      "status_code": 200,
+      "failure_type": null,
+      "type": "/team/",
+      "visible_text_length": 1293,
+      "script_size": 741,
+      "page_size_bytes": 46664,
+      "title": "Team - Aionyix Solutions | Meet Our Founder",
+      "h1_present": true,
+      "h1_text": "AIONYIX",
+      "has_structured_data": true,
+      "jsonld_block_count": 1,
+      "jsonld_raw": [
+        "{\"@context\":\"https://schema.org\",\"@type\":\"AboutPage\",\"name\":\"Team - Aionyix Solutions\",\"url\":\"https://aionyix.com/team\",\"description\":\"Meet our team and learn about our expertise in building scalable SaaS solutions.\",\"mainEntity\":{\"@type\":\"Organization\",\"name\":\"Aionyix Solutions\",\"founder\":{\"@type\":\"Person\",\"name\":\"Rohit Pardeshi\",\"jobTitle\":\"Founder & CEO\"}},\"breadcrumb\":{\"@type\":\"BreadcrumbList\",\"itemListElement\":[{\"@type\":\"ListItem\",\"position\":1,\"name\":\"Home\",\"item\":\"https://aionyix.com/\"},{\"@type\":\"ListItem\",\"position\":2,\"name\":\"Team\",\"item\":\"https://aionyix.com/team\"}]}}"
+      ],
+      "meta_robots": "index, follow",
+      "canonical_url": "https://aionyix.com/team"
+    }
+  ],
+  "render_check": {
+    "status": "completed",
+    "render_sampled": true,
+    "pages_rendered": [
+      "https://aionyix.com/",
+      "https://aionyix.com/technology",
+      "https://aionyix.com/team"
+    ],
+    "pages": [
+      {
+        "url": "https://aionyix.com/",
+        "page_type": "homepage",
+        "raw_text_len": 4329,
+        "rendered_text_len": 4250,
+        "text_delta_ratio": 0.0,
+        "raw_title": "Aionyix Solutions",
+        "rendered_title": "Aionyix Solutions",
+        "h1_present_raw": true,
+        "h1_present_rendered": true,
+        "jsonld_blocks_raw": 1,
+        "jsonld_blocks_rendered": 1,
+        "main_content_source": "server",
+        "noscript_fallback_len": 0
+      },
+      {
+        "url": "https://aionyix.com/technology",
+        "page_type": "/technology/",
+        "raw_text_len": 3005,
+        "rendered_text_len": 2927,
+        "text_delta_ratio": 0.0,
+        "raw_title": "Technology - Aionyix Solutions | Our Tech Stack",
+        "rendered_title": "Technology - Aionyix Solutions | Our Tech Stack",
+        "h1_present_raw": true,
+        "h1_present_rendered": false,
+        "jsonld_blocks_raw": 1,
+        "jsonld_blocks_rendered": 1,
+        "main_content_source": "server",
+        "noscript_fallback_len": 0
+      },
+      {
+        "url": "https://aionyix.com/team",
+        "page_type": "/team/",
+        "raw_text_len": 1293,
+        "rendered_text_len": 1216,
+        "text_delta_ratio": 0.0,
+        "raw_title": "Team - Aionyix Solutions | Meet Our Founder",
+        "rendered_title": "Team - Aionyix Solutions | Meet Our Founder",
+        "h1_present_raw": true,
+        "h1_present_rendered": false,
+        "jsonld_blocks_raw": 1,
+        "jsonld_blocks_rendered": 1,
+        "main_content_source": "server",
+        "noscript_fallback_len": 0
+      }
+    ],
+    "template_inconsistent": false
+  },
+  "crawl_summary": {
+    "pages_attempted": 3,
+    "pages_succeeded": 3,
+    "pages_failed": 0,
+    "pages_rendered": 3
+  }
+}

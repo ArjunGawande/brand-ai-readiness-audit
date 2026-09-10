@@ -1,0 +1,366 @@
+{
+  "site": "https://www.nytimes.com",
+  "crawled_at": "2026-09-10T10:13:51.990190+00:00Z",
+  "our_agent": "BrandAuditBot/1.0 (+https://example.org/audit; read-only)",
+  "robots_txt": {
+    "found": true,
+    "rules_by_agent": {
+      "GPTBot": "allowed",
+      "OAI-SearchBot": "allowed",
+      "ChatGPT-User": "allowed",
+      "ClaudeBot": "allowed",
+      "Claude-User": "allowed",
+      "PerplexityBot": "allowed",
+      "CCBot": "allowed",
+      "Google-Extended": "allowed"
+    }
+  },
+  "ua_probe": {
+    "url_tested": "https://www.nytimes.com",
+    "results": [
+      {
+        "agent": "chrome_baseline",
+        "status_code": 200,
+        "page_size_bytes": 1369084,
+        "text_length": 7120,
+        "final_url": "https://www.nytimes.com",
+        "failure_type": null
+      },
+      {
+        "agent": "GPTBot",
+        "status_code": 403,
+        "page_size_bytes": 139269,
+        "text_length": 0,
+        "final_url": "https://www.nytimes.com",
+        "failure_type": null
+      },
+      {
+        "agent": "PerplexityBot",
+        "status_code": 403,
+        "page_size_bytes": 139269,
+        "text_length": 0,
+        "final_url": "https://www.nytimes.com",
+        "failure_type": null
+      },
+      {
+        "agent": "ClaudeBot",
+        "status_code": 403,
+        "page_size_bytes": 139269,
+        "text_length": 0,
+        "final_url": "https://www.nytimes.com",
+        "failure_type": null
+      }
+    ]
+  },
+  "pages_checked": [
+    {
+      "requested_url": "https://www.nytimes.com",
+      "final_url": "https://www.nytimes.com",
+      "redirect_count": 0,
+      "status_code": 200,
+      "failure_type": null,
+      "type": "homepage",
+      "visible_text_length": 8378,
+      "script_size": 838708,
+      "page_size_bytes": 1087020,
+      "title": "The New York Times - Breaking News, US News, World News and Videos",
+      "h1_present": true,
+      "h1_text": "New York Times - Top Stories",
+      "has_structured_data": true,
+      "jsonld_block_count": 2,
+      "jsonld_raw": [
+        "{\"@context\":\"https://schema.org\",\"@type\":\"WebSite\",\"image\":[{\"@context\":\"https://schema.org\",\"@type\":\"ImageObject\",\"url\":\"https://static01.nyt.com/vi-assets/images/share/1200x675_nameplate.png\",\"height\":675,\"width\":1200,\"contentUrl\":\"https://static01.nyt.com/vi-assets/images/share/1200x675_nameplate.png\",\"creditText\":\"The New York Times\"},{\"@context\":\"https://schema.org\",\"@type\":\"ImageObject\",\"url\":\"https://static01.nyt.com/vi-assets/images/share/1200x900_t.png\",\"height\":900,\"width\":1200,\"contentUrl\":\"https://static01.nyt.com/vi-assets/images/share/1200x900_t.png\",\"creditText\":\"The New York Times\"},{\"@context\":\"https://schema.org\",\"@type\":\"ImageObject\",\"url\":\"https://static01.nyt.com/vi-assets/images/share/1200x1200_t.png\",\"height\":1200,\"width\":1200,\"contentUrl\":\"https://static01.nyt.com/vi-assets/images/share/1200x1200_t.png\",\"creditText\":\"The New York Times\"}],\"url\":\"https://www.nytimes.com\",\"name\":\"The New York Times\",\"alternateName\":[\"NYT\",\"new york times\",\"nytimes\",\"ny times\"],\"potentialAction\":{\"@type\":\"SearchAction\",\"target\":{\"@type\":\"EntryPoint\",\"urlTemplate\":\"https://www.nytimes.com/search?query={search_term_string}\"},\"query-input\":\"required name=search_term_string\"},\"mainEntity\":{\"@context\":\"https://schema.org\",\"@type\":\"ItemList\",\"itemListElement\":[{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/10/world/asia/25-years-after-9-11-al-qaeda-still-has-a-home-in-afghanistan.html\",\"position\":1},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/10/world/asia/afghanistan-war-photojournalism.html\",\"position\":2},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/10/world/europe/germany-russia-afd-putin.html\",\"position\":3},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/10/us/politics/republican-midterm-convention-socialism-fears.html\",\"position\":4},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/10/us/politics/trump-republican-convention-speech-takeaways.html\",\"position\":5},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/10/us/politics/department-of-justice-election-fraud-states.html\",\"position\":6},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/10/business/media/ai-chatbots-election-misinformation.html\",\"position\":7},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/09/world/europe/eu-fire-fighting.html\",\"position\":8},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/09/world/asia/indonesia-wildfires-malaysia-cloud-seeding.html\",\"position\":9},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/09/climate/august-hottest-month-global-warming.html\",\"position\":10},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/09/weather/el-nino-weather-forecast-facts.html\",\"position\":11},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/10/arts/design/bayeux-tapestry-british-museum-opening.html\",\"position\":12},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/10/arts/design/bayeux-tapestry-replicas.html\",\"position\":13},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/10/magazine/did-9-11-really-change-everything.html\",\"position\":14},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/video/world/middleeast/100000011116542/inside-a-christian-lebanese-village-occupied-by-israel.html\",\"position\":15},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/athletic/7574567/2026/09/10/us-open-quarterfinal-bracket-results-favorites-analysis/\",\"position\":16},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/athletic/7578980/2026/09/09/elena-rybakina-world-no-1-tennis-rankings/\",\"position\":17},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/10/us/charlie-kirk-assassination-anniversary.html\",\"position\":18},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/10/technology/personaltech/iphone-duo-foldable-phones.html\",\"position\":19},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/09/business/economy/treasury-repurchase-bessent.html\",\"position\":20},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/10/opinion/new-york-fashion-week-fast-fashion.html\",\"position\":21},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/10/opinion/trump-midterms-dallas-convention.html\",\"position\":22},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/10/opinion/ai-big-tech-america-politics.html\",\"position\":23},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/10/opinion/911-patriot-act-trump-politics.html\",\"position\":24},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/09/world/10int-theworld-web-ai-education.html\",\"position\":25},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/10/arts/television/jimmy-kimmel-james-talarico-interview.html\",\"position\":26},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/10/world/canada/carney-trump-canada-us-trade-war-tariffs.html\",\"position\":27},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/09/world/asia/philippines-ferry-fire-palawan.html\",\"position\":28},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/athletic/7577624/2026/09/10/manchester-united-champions-league-return/\",\"position\":29},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/09/world/middleeast/israel-uk-west-bank-sanctions.html\",\"position\":30},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/athletic/connections-sports-edition\",\"position\":31},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/games/wordle/index.html\",\"position\":32},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/games/connections?GAMES_connectionsRollout_1130=1_ConnectionsV2\",\"position\":33},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/puzzles/spelling-bee\",\"position\":34},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/crosswords/game/mini\",\"position\":35},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/crosswords/game/midi\",\"position\":36},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/crosswords/game/daily\",\"position\":37}],\"numberOfItems\":37},\"publisher\":{\"@id\":\"https://www.nytimes.com/#publisher\",\"name\":\"The New York Times\"}}",
+        "{\"@context\":\"https://schema.org\",\"@type\":\"NewsMediaOrganization\",\"name\":\"The New York Times\",\"logo\":{\"@context\":\"https://schema.org\",\"@type\":\"ImageObject\",\"url\":\"https://static01.nyt.com/images/icons/t_logo_291_black.png\",\"height\":291,\"width\":291,\"contentUrl\":\"https://static01.nyt.com/images/icons/t_logo_291_black.png\",\"creditText\":\"The New York Times\"},\"url\":\"https://www.nytimes.com/\",\"@id\":\"https://www.nytimes.com/#publisher\",\"publishingPrinciples\":\"https://www.nytimes.com/editorial-standards/ethical-journalism.html\",\"diversityPolicy\":\"https://www.nytco.com/company/diversity-and-inclusion/\",\"ethicsPolicy\":\"https://www.nytco.com/company/standards-ethics/\",\"masthead\":\"https://www.nytimes.com/interactive/2023/01/28/admin/the-new-york-times-masthead.html\",\"foundingDate\":\"1851-09-18\",\"sameAs\":[\"https://www.facebook.com/nytimes/\",\"https://x.com/nytimes\",\"https://www.instagram.com/nytimes/\",\"https://www.youtube.com/user/TheNewYorkTimes\",\"https://www.linkedin.com/company/the-new-york-times\",\"https://www.wikidata.org/wiki/Q9684\",\"https://en.wikipedia.org/wiki/The_New_York_Times\"],\"alternateName\":[\"NYT\",\"new york times\",\"nytimes\",\"ny times\"],\"subOrganization\":[{\"@type\":\"Organization\",\"name\":\"NYT Cooking\",\"url\":\"https://cooking.nytimes.com/\",\"sameAs\":[\"https://www.facebook.com/nytcooking/\",\"https://www.facebook.com/groups/nytcooks/\",\"https://www.instagram.com/nytcooking/\",\"https://www.youtube.com/channel/UC1rIOwTqDuWkFj87HZYRFOg\",\"https://x.com/nytfood\"],\"logo\":[{\"url\":\"https://static01.nyt.com/applications/cooking/37f1abc/assets/SiteLogoRed.svg\",\"height\":31,\"width\":168,\"@type\":\"ImageObject\"},{\"url\":\"https://static01.nyt.com/applications/cooking/37f1abc/assets/SiteLogoBlack.svg\",\"height\":24,\"width\":131,\"@type\":\"ImageObject\"}]},{\"@type\":\"Organization\",\"name\":\"Wirecutter\",\"url\":\"https://www.nytimes.com/wirecutter/\",\"sameAs\":[\"https://www.facebook.com/thewirecutter/\",\"https://www.instagram.com/wirecutter/\",\"https://x.com/wirecutter/\",\"https://www.linkedin.com/company/the-wirecutter/\",\"https://www.youtube.com/wirecutter\"],\"logo\":{\"@type\":\"ImageObject\",\"url\":\"https://cdn.thewirecutter.com/wp-content/uploads/2020/05/nytimes-wirecutter-logo.png\",\"width\":266,\"height\":34}},{\"@type\":\"Organization\",\"name\":\"The Athletic\",\"url\":\"https://www.nytimes.com/athletic/\",\"sameAs\":[\"https://www.facebook.com/TheAthletic\",\"https://instagram.com/TheAthleticHQ\",\"https://x.com/TheAthletic\",\"https://www.linkedin.com/company/the-athletic-media-company/\",\"https://www.youtube.com/TheAthletic\"],\"logo\":{\"@type\":\"ImageObject\",\"url\":\"https://www.nytimes.com/athletic/app/themes/athletic/assets/img/open-graph-asset.png\",\"width\":266,\"height\":150}}]}"
+      ],
+      "meta_robots": null,
+      "canonical_url": "https://www.nytimes.com"
+    },
+    {
+      "requested_url": "https://www.nytimes.com/",
+      "final_url": "https://www.nytimes.com/",
+      "redirect_count": 0,
+      "status_code": 200,
+      "failure_type": null,
+      "type": "homepage",
+      "visible_text_length": 8378,
+      "script_size": 838708,
+      "page_size_bytes": 1087020,
+      "title": "The New York Times - Breaking News, US News, World News and Videos",
+      "h1_present": true,
+      "h1_text": "New York Times - Top Stories",
+      "has_structured_data": true,
+      "jsonld_block_count": 2,
+      "jsonld_raw": [
+        "{\"@context\":\"https://schema.org\",\"@type\":\"WebSite\",\"image\":[{\"@context\":\"https://schema.org\",\"@type\":\"ImageObject\",\"url\":\"https://static01.nyt.com/vi-assets/images/share/1200x675_nameplate.png\",\"height\":675,\"width\":1200,\"contentUrl\":\"https://static01.nyt.com/vi-assets/images/share/1200x675_nameplate.png\",\"creditText\":\"The New York Times\"},{\"@context\":\"https://schema.org\",\"@type\":\"ImageObject\",\"url\":\"https://static01.nyt.com/vi-assets/images/share/1200x900_t.png\",\"height\":900,\"width\":1200,\"contentUrl\":\"https://static01.nyt.com/vi-assets/images/share/1200x900_t.png\",\"creditText\":\"The New York Times\"},{\"@context\":\"https://schema.org\",\"@type\":\"ImageObject\",\"url\":\"https://static01.nyt.com/vi-assets/images/share/1200x1200_t.png\",\"height\":1200,\"width\":1200,\"contentUrl\":\"https://static01.nyt.com/vi-assets/images/share/1200x1200_t.png\",\"creditText\":\"The New York Times\"}],\"url\":\"https://www.nytimes.com\",\"name\":\"The New York Times\",\"alternateName\":[\"NYT\",\"new york times\",\"nytimes\",\"ny times\"],\"potentialAction\":{\"@type\":\"SearchAction\",\"target\":{\"@type\":\"EntryPoint\",\"urlTemplate\":\"https://www.nytimes.com/search?query={search_term_string}\"},\"query-input\":\"required name=search_term_string\"},\"mainEntity\":{\"@context\":\"https://schema.org\",\"@type\":\"ItemList\",\"itemListElement\":[{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/10/world/asia/25-years-after-9-11-al-qaeda-still-has-a-home-in-afghanistan.html\",\"position\":1},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/10/world/asia/afghanistan-war-photojournalism.html\",\"position\":2},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/10/world/europe/germany-russia-afd-putin.html\",\"position\":3},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/10/us/politics/republican-midterm-convention-socialism-fears.html\",\"position\":4},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/10/us/politics/trump-republican-convention-speech-takeaways.html\",\"position\":5},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/10/us/politics/department-of-justice-election-fraud-states.html\",\"position\":6},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/10/business/media/ai-chatbots-election-misinformation.html\",\"position\":7},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/09/world/europe/eu-fire-fighting.html\",\"position\":8},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/09/world/asia/indonesia-wildfires-malaysia-cloud-seeding.html\",\"position\":9},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/09/climate/august-hottest-month-global-warming.html\",\"position\":10},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/09/weather/el-nino-weather-forecast-facts.html\",\"position\":11},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/10/arts/design/bayeux-tapestry-british-museum-opening.html\",\"position\":12},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/10/arts/design/bayeux-tapestry-replicas.html\",\"position\":13},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/10/magazine/did-9-11-really-change-everything.html\",\"position\":14},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/video/world/middleeast/100000011116542/inside-a-christian-lebanese-village-occupied-by-israel.html\",\"position\":15},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/athletic/7574567/2026/09/10/us-open-quarterfinal-bracket-results-favorites-analysis/\",\"position\":16},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/athletic/7578980/2026/09/09/elena-rybakina-world-no-1-tennis-rankings/\",\"position\":17},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/10/us/charlie-kirk-assassination-anniversary.html\",\"position\":18},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/10/technology/personaltech/iphone-duo-foldable-phones.html\",\"position\":19},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/09/business/economy/treasury-repurchase-bessent.html\",\"position\":20},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/10/opinion/new-york-fashion-week-fast-fashion.html\",\"position\":21},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/10/opinion/trump-midterms-dallas-convention.html\",\"position\":22},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/10/opinion/ai-big-tech-america-politics.html\",\"position\":23},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/10/opinion/911-patriot-act-trump-politics.html\",\"position\":24},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/09/world/10int-theworld-web-ai-education.html\",\"position\":25},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/10/arts/television/jimmy-kimmel-james-talarico-interview.html\",\"position\":26},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/10/world/canada/carney-trump-canada-us-trade-war-tariffs.html\",\"position\":27},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/09/world/asia/philippines-ferry-fire-palawan.html\",\"position\":28},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/athletic/7577624/2026/09/10/manchester-united-champions-league-return/\",\"position\":29},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/09/world/middleeast/israel-uk-west-bank-sanctions.html\",\"position\":30},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/athletic/connections-sports-edition\",\"position\":31},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/games/wordle/index.html\",\"position\":32},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/games/connections?GAMES_connectionsRollout_1130=1_ConnectionsV2\",\"position\":33},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/puzzles/spelling-bee\",\"position\":34},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/crosswords/game/mini\",\"position\":35},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/crosswords/game/midi\",\"position\":36},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/crosswords/game/daily\",\"position\":37}],\"numberOfItems\":37},\"publisher\":{\"@id\":\"https://www.nytimes.com/#publisher\",\"name\":\"The New York Times\"}}",
+        "{\"@context\":\"https://schema.org\",\"@type\":\"NewsMediaOrganization\",\"name\":\"The New York Times\",\"logo\":{\"@context\":\"https://schema.org\",\"@type\":\"ImageObject\",\"url\":\"https://static01.nyt.com/images/icons/t_logo_291_black.png\",\"height\":291,\"width\":291,\"contentUrl\":\"https://static01.nyt.com/images/icons/t_logo_291_black.png\",\"creditText\":\"The New York Times\"},\"url\":\"https://www.nytimes.com/\",\"@id\":\"https://www.nytimes.com/#publisher\",\"publishingPrinciples\":\"https://www.nytimes.com/editorial-standards/ethical-journalism.html\",\"diversityPolicy\":\"https://www.nytco.com/company/diversity-and-inclusion/\",\"ethicsPolicy\":\"https://www.nytco.com/company/standards-ethics/\",\"masthead\":\"https://www.nytimes.com/interactive/2023/01/28/admin/the-new-york-times-masthead.html\",\"foundingDate\":\"1851-09-18\",\"sameAs\":[\"https://www.facebook.com/nytimes/\",\"https://x.com/nytimes\",\"https://www.instagram.com/nytimes/\",\"https://www.youtube.com/user/TheNewYorkTimes\",\"https://www.linkedin.com/company/the-new-york-times\",\"https://www.wikidata.org/wiki/Q9684\",\"https://en.wikipedia.org/wiki/The_New_York_Times\"],\"alternateName\":[\"NYT\",\"new york times\",\"nytimes\",\"ny times\"],\"subOrganization\":[{\"@type\":\"Organization\",\"name\":\"NYT Cooking\",\"url\":\"https://cooking.nytimes.com/\",\"sameAs\":[\"https://www.facebook.com/nytcooking/\",\"https://www.facebook.com/groups/nytcooks/\",\"https://www.instagram.com/nytcooking/\",\"https://www.youtube.com/channel/UC1rIOwTqDuWkFj87HZYRFOg\",\"https://x.com/nytfood\"],\"logo\":[{\"url\":\"https://static01.nyt.com/applications/cooking/37f1abc/assets/SiteLogoRed.svg\",\"height\":31,\"width\":168,\"@type\":\"ImageObject\"},{\"url\":\"https://static01.nyt.com/applications/cooking/37f1abc/assets/SiteLogoBlack.svg\",\"height\":24,\"width\":131,\"@type\":\"ImageObject\"}]},{\"@type\":\"Organization\",\"name\":\"Wirecutter\",\"url\":\"https://www.nytimes.com/wirecutter/\",\"sameAs\":[\"https://www.facebook.com/thewirecutter/\",\"https://www.instagram.com/wirecutter/\",\"https://x.com/wirecutter/\",\"https://www.linkedin.com/company/the-wirecutter/\",\"https://www.youtube.com/wirecutter\"],\"logo\":{\"@type\":\"ImageObject\",\"url\":\"https://cdn.thewirecutter.com/wp-content/uploads/2020/05/nytimes-wirecutter-logo.png\",\"width\":266,\"height\":34}},{\"@type\":\"Organization\",\"name\":\"The Athletic\",\"url\":\"https://www.nytimes.com/athletic/\",\"sameAs\":[\"https://www.facebook.com/TheAthletic\",\"https://instagram.com/TheAthleticHQ\",\"https://x.com/TheAthletic\",\"https://www.linkedin.com/company/the-athletic-media-company/\",\"https://www.youtube.com/TheAthletic\"],\"logo\":{\"@type\":\"ImageObject\",\"url\":\"https://www.nytimes.com/athletic/app/themes/athletic/assets/img/open-graph-asset.png\",\"width\":266,\"height\":150}}]}"
+      ],
+      "meta_robots": null,
+      "canonical_url": "https://www.nytimes.com"
+    },
+    {
+      "requested_url": "https://www.nytimes.com/international/",
+      "final_url": "https://www.nytimes.com/international/",
+      "redirect_count": 0,
+      "status_code": 200,
+      "failure_type": null,
+      "type": "/international/",
+      "visible_text_length": 6940,
+      "script_size": 841268,
+      "page_size_bytes": 1055394,
+      "title": "The New York Times International - Breaking News, US News, World News, Videos",
+      "h1_present": true,
+      "h1_text": "New York Times - Top Stories",
+      "has_structured_data": true,
+      "jsonld_block_count": 2,
+      "jsonld_raw": [
+        "{\"@context\":\"https://schema.org\",\"@type\":\"WebPage\",\"image\":[{\"@context\":\"https://schema.org\",\"@type\":\"ImageObject\",\"url\":\"https://static01.nyt.com/vi-assets/images/share/1200x675_nameplate.png\",\"height\":675,\"width\":1200,\"contentUrl\":\"https://static01.nyt.com/vi-assets/images/share/1200x675_nameplate.png\",\"creditText\":\"The New York Times\"},{\"@context\":\"https://schema.org\",\"@type\":\"ImageObject\",\"url\":\"https://static01.nyt.com/vi-assets/images/share/1200x900_t.png\",\"height\":900,\"width\":1200,\"contentUrl\":\"https://static01.nyt.com/vi-assets/images/share/1200x900_t.png\",\"creditText\":\"The New York Times\"},{\"@context\":\"https://schema.org\",\"@type\":\"ImageObject\",\"url\":\"https://static01.nyt.com/vi-assets/images/share/1200x1200_t.png\",\"height\":1200,\"width\":1200,\"contentUrl\":\"https://static01.nyt.com/vi-assets/images/share/1200x1200_t.png\",\"creditText\":\"The New York Times\"}],\"name\":\"The New York Times\",\"alternateName\":[\"NYT\",\"new york times\",\"nytimes\",\"ny times\"],\"mainEntity\":{\"@context\":\"https://schema.org\",\"@type\":\"ItemList\",\"itemListElement\":[{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/10/world/asia/25-years-after-9-11-al-qaeda-still-has-a-home-in-afghanistan.html\",\"position\":1},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/10/world/asia/afghanistan-war-photojournalism.html\",\"position\":2},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/10/world/europe/germany-russia-afd-putin.html\",\"position\":3},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/10/us/politics/republican-midterm-convention-socialism-fears.html\",\"position\":4},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/10/us/politics/trump-republican-convention-speech-takeaways.html\",\"position\":5},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/10/us/politics/department-of-justice-election-fraud-states.html\",\"position\":6},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/10/business/media/ai-chatbots-election-misinformation.html\",\"position\":7},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/09/world/europe/eu-fire-fighting.html\",\"position\":8},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/09/world/asia/indonesia-wildfires-malaysia-cloud-seeding.html\",\"position\":9},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/09/climate/august-hottest-month-global-warming.html\",\"position\":10},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/09/weather/el-nino-weather-forecast-facts.html\",\"position\":11},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/10/arts/design/bayeux-tapestry-british-museum-opening.html\",\"position\":12},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/10/arts/design/bayeux-tapestry-replicas.html\",\"position\":13},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/10/magazine/did-9-11-really-change-everything.html\",\"position\":14},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/video/world/middleeast/100000011116542/inside-a-christian-lebanese-village-occupied-by-israel.html\",\"position\":15},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/athletic/7574567/2026/09/10/us-open-quarterfinal-bracket-results-favorites-analysis/\",\"position\":16},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/athletic/7578980/2026/09/09/elena-rybakina-world-no-1-tennis-rankings/\",\"position\":17},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/10/us/charlie-kirk-assassination-anniversary.html\",\"position\":18},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/10/technology/personaltech/iphone-duo-foldable-phones.html\",\"position\":19},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/09/business/economy/treasury-repurchase-bessent.html\",\"position\":20},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/10/opinion/new-york-fashion-week-fast-fashion.html\",\"position\":21},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/10/opinion/trump-midterms-dallas-convention.html\",\"position\":22},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/10/opinion/ai-big-tech-america-politics.html\",\"position\":23},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/10/opinion/911-patriot-act-trump-politics.html\",\"position\":24},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/09/world/10int-theworld-web-ai-education.html\",\"position\":25},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/10/arts/television/jimmy-kimmel-james-talarico-interview.html\",\"position\":26},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/10/world/canada/carney-trump-canada-us-trade-war-tariffs.html\",\"position\":27},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/09/world/asia/philippines-ferry-fire-palawan.html\",\"position\":28},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/athletic/7577624/2026/09/10/manchester-united-champions-league-return/\",\"position\":29},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/09/world/middleeast/israel-uk-west-bank-sanctions.html\",\"position\":30},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/athletic/connections-sports-edition\",\"position\":31},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/games/wordle/index.html\",\"position\":32},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/games/connections?GAMES_connectionsRollout_1130=1_ConnectionsV2\",\"position\":33},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/puzzles/spelling-bee\",\"position\":34},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/crosswords/game/mini\",\"position\":35},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/crosswords/game/midi\",\"position\":36},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/crosswords/game/daily\",\"position\":37}],\"numberOfItems\":37},\"publisher\":{\"@id\":\"https://www.nytimes.com/#publisher\",\"name\":\"The New York Times\"}}",
+        "{\"@context\":\"https://schema.org\",\"@type\":\"NewsMediaOrganization\",\"name\":\"The New York Times\",\"logo\":{\"@context\":\"https://schema.org\",\"@type\":\"ImageObject\",\"url\":\"https://static01.nyt.com/images/icons/t_logo_291_black.png\",\"height\":291,\"width\":291,\"contentUrl\":\"https://static01.nyt.com/images/icons/t_logo_291_black.png\",\"creditText\":\"The New York Times\"},\"url\":\"https://www.nytimes.com/\",\"@id\":\"https://www.nytimes.com/#publisher\",\"publishingPrinciples\":\"https://www.nytimes.com/editorial-standards/ethical-journalism.html\",\"diversityPolicy\":\"https://www.nytco.com/company/diversity-and-inclusion/\",\"ethicsPolicy\":\"https://www.nytco.com/company/standards-ethics/\",\"masthead\":\"https://www.nytimes.com/interactive/2023/01/28/admin/the-new-york-times-masthead.html\",\"foundingDate\":\"1851-09-18\",\"sameAs\":[\"https://www.facebook.com/nytimes/\",\"https://x.com/nytimes\",\"https://www.instagram.com/nytimes/\",\"https://www.youtube.com/user/TheNewYorkTimes\",\"https://www.linkedin.com/company/the-new-york-times\",\"https://www.wikidata.org/wiki/Q9684\",\"https://en.wikipedia.org/wiki/The_New_York_Times\"],\"alternateName\":[\"NYT\",\"new york times\",\"nytimes\",\"ny times\"],\"subOrganization\":[{\"@type\":\"Organization\",\"name\":\"NYT Cooking\",\"url\":\"https://cooking.nytimes.com/\",\"sameAs\":[\"https://www.facebook.com/nytcooking/\",\"https://www.facebook.com/groups/nytcooks/\",\"https://www.instagram.com/nytcooking/\",\"https://www.youtube.com/channel/UC1rIOwTqDuWkFj87HZYRFOg\",\"https://x.com/nytfood\"],\"logo\":[{\"url\":\"https://static01.nyt.com/applications/cooking/37f1abc/assets/SiteLogoRed.svg\",\"height\":31,\"width\":168,\"@type\":\"ImageObject\"},{\"url\":\"https://static01.nyt.com/applications/cooking/37f1abc/assets/SiteLogoBlack.svg\",\"height\":24,\"width\":131,\"@type\":\"ImageObject\"}]},{\"@type\":\"Organization\",\"name\":\"Wirecutter\",\"url\":\"https://www.nytimes.com/wirecutter/\",\"sameAs\":[\"https://www.facebook.com/thewirecutter/\",\"https://www.instagram.com/wirecutter/\",\"https://x.com/wirecutter/\",\"https://www.linkedin.com/company/the-wirecutter/\",\"https://www.youtube.com/wirecutter\"],\"logo\":{\"@type\":\"ImageObject\",\"url\":\"https://cdn.thewirecutter.com/wp-content/uploads/2020/05/nytimes-wirecutter-logo.png\",\"width\":266,\"height\":34}},{\"@type\":\"Organization\",\"name\":\"The Athletic\",\"url\":\"https://www.nytimes.com/athletic/\",\"sameAs\":[\"https://www.facebook.com/TheAthletic\",\"https://instagram.com/TheAthleticHQ\",\"https://x.com/TheAthletic\",\"https://www.linkedin.com/company/the-athletic-media-company/\",\"https://www.youtube.com/TheAthletic\"],\"logo\":{\"@type\":\"ImageObject\",\"url\":\"https://www.nytimes.com/athletic/app/themes/athletic/assets/img/open-graph-asset.png\",\"width\":266,\"height\":150}}]}"
+      ],
+      "meta_robots": null,
+      "canonical_url": "https://www.nytimes.com/international/"
+    },
+    {
+      "requested_url": "https://www.nytimes.com/ca/",
+      "final_url": "https://www.nytimes.com/ca/",
+      "redirect_count": 0,
+      "status_code": 200,
+      "failure_type": null,
+      "type": "/ca/",
+      "visible_text_length": 6940,
+      "script_size": 839911,
+      "page_size_bytes": 1053930,
+      "title": "The New York Times Canada - Breaking News, US News, World News, Videos",
+      "h1_present": true,
+      "h1_text": "New York Times - Top Stories",
+      "has_structured_data": true,
+      "jsonld_block_count": 2,
+      "jsonld_raw": [
+        "{\"@context\":\"https://schema.org\",\"@type\":\"WebPage\",\"image\":[{\"@context\":\"https://schema.org\",\"@type\":\"ImageObject\",\"url\":\"https://static01.nyt.com/vi-assets/images/share/1200x675_nameplate.png\",\"height\":675,\"width\":1200,\"contentUrl\":\"https://static01.nyt.com/vi-assets/images/share/1200x675_nameplate.png\",\"creditText\":\"The New York Times\"},{\"@context\":\"https://schema.org\",\"@type\":\"ImageObject\",\"url\":\"https://static01.nyt.com/vi-assets/images/share/1200x900_t.png\",\"height\":900,\"width\":1200,\"contentUrl\":\"https://static01.nyt.com/vi-assets/images/share/1200x900_t.png\",\"creditText\":\"The New York Times\"},{\"@context\":\"https://schema.org\",\"@type\":\"ImageObject\",\"url\":\"https://static01.nyt.com/vi-assets/images/share/1200x1200_t.png\",\"height\":1200,\"width\":1200,\"contentUrl\":\"https://static01.nyt.com/vi-assets/images/share/1200x1200_t.png\",\"creditText\":\"The New York Times\"}],\"name\":\"The New York Times\",\"alternateName\":[\"NYT\",\"new york times\",\"nytimes\",\"ny times\"],\"mainEntity\":{\"@context\":\"https://schema.org\",\"@type\":\"ItemList\",\"itemListElement\":[{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/10/world/asia/25-years-after-9-11-al-qaeda-still-has-a-home-in-afghanistan.html\",\"position\":1},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/10/world/asia/afghanistan-war-photojournalism.html\",\"position\":2},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/10/world/europe/germany-russia-afd-putin.html\",\"position\":3},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/10/us/politics/republican-midterm-convention-socialism-fears.html\",\"position\":4},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/10/us/politics/trump-republican-convention-speech-takeaways.html\",\"position\":5},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/10/us/politics/department-of-justice-election-fraud-states.html\",\"position\":6},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/10/business/media/ai-chatbots-election-misinformation.html\",\"position\":7},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/09/world/europe/eu-fire-fighting.html\",\"position\":8},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/09/world/asia/indonesia-wildfires-malaysia-cloud-seeding.html\",\"position\":9},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/09/climate/august-hottest-month-global-warming.html\",\"position\":10},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/09/weather/el-nino-weather-forecast-facts.html\",\"position\":11},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/10/arts/design/bayeux-tapestry-british-museum-opening.html\",\"position\":12},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/10/arts/design/bayeux-tapestry-replicas.html\",\"position\":13},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/10/magazine/did-9-11-really-change-everything.html\",\"position\":14},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/video/world/middleeast/100000011116542/inside-a-christian-lebanese-village-occupied-by-israel.html\",\"position\":15},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/athletic/7574567/2026/09/10/us-open-quarterfinal-bracket-results-favorites-analysis/\",\"position\":16},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/athletic/7578980/2026/09/09/elena-rybakina-world-no-1-tennis-rankings/\",\"position\":17},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/10/us/charlie-kirk-assassination-anniversary.html\",\"position\":18},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/10/technology/personaltech/iphone-duo-foldable-phones.html\",\"position\":19},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/09/business/economy/treasury-repurchase-bessent.html\",\"position\":20},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/10/opinion/new-york-fashion-week-fast-fashion.html\",\"position\":21},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/10/opinion/trump-midterms-dallas-convention.html\",\"position\":22},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/10/opinion/ai-big-tech-america-politics.html\",\"position\":23},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/10/opinion/911-patriot-act-trump-politics.html\",\"position\":24},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/09/world/10int-theworld-web-ai-education.html\",\"position\":25},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/10/arts/television/jimmy-kimmel-james-talarico-interview.html\",\"position\":26},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/10/world/canada/carney-trump-canada-us-trade-war-tariffs.html\",\"position\":27},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/09/world/asia/philippines-ferry-fire-palawan.html\",\"position\":28},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/athletic/7577624/2026/09/10/manchester-united-champions-league-return/\",\"position\":29},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/09/world/middleeast/israel-uk-west-bank-sanctions.html\",\"position\":30},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/athletic/connections-sports-edition\",\"position\":31},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/games/wordle/index.html\",\"position\":32},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/games/connections?GAMES_connectionsRollout_1130=1_ConnectionsV2\",\"position\":33},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/puzzles/spelling-bee\",\"position\":34},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/crosswords/game/mini\",\"position\":35},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/crosswords/game/midi\",\"position\":36},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/crosswords/game/daily\",\"position\":37}],\"numberOfItems\":37},\"publisher\":{\"@id\":\"https://www.nytimes.com/#publisher\",\"name\":\"The New York Times\"}}",
+        "{\"@context\":\"https://schema.org\",\"@type\":\"NewsMediaOrganization\",\"name\":\"The New York Times\",\"logo\":{\"@context\":\"https://schema.org\",\"@type\":\"ImageObject\",\"url\":\"https://static01.nyt.com/images/icons/t_logo_291_black.png\",\"height\":291,\"width\":291,\"contentUrl\":\"https://static01.nyt.com/images/icons/t_logo_291_black.png\",\"creditText\":\"The New York Times\"},\"url\":\"https://www.nytimes.com/\",\"@id\":\"https://www.nytimes.com/#publisher\",\"publishingPrinciples\":\"https://www.nytimes.com/editorial-standards/ethical-journalism.html\",\"diversityPolicy\":\"https://www.nytco.com/company/diversity-and-inclusion/\",\"ethicsPolicy\":\"https://www.nytco.com/company/standards-ethics/\",\"masthead\":\"https://www.nytimes.com/interactive/2023/01/28/admin/the-new-york-times-masthead.html\",\"foundingDate\":\"1851-09-18\",\"sameAs\":[\"https://www.facebook.com/nytimes/\",\"https://x.com/nytimes\",\"https://www.instagram.com/nytimes/\",\"https://www.youtube.com/user/TheNewYorkTimes\",\"https://www.linkedin.com/company/the-new-york-times\",\"https://www.wikidata.org/wiki/Q9684\",\"https://en.wikipedia.org/wiki/The_New_York_Times\"],\"alternateName\":[\"NYT\",\"new york times\",\"nytimes\",\"ny times\"],\"subOrganization\":[{\"@type\":\"Organization\",\"name\":\"NYT Cooking\",\"url\":\"https://cooking.nytimes.com/\",\"sameAs\":[\"https://www.facebook.com/nytcooking/\",\"https://www.facebook.com/groups/nytcooks/\",\"https://www.instagram.com/nytcooking/\",\"https://www.youtube.com/channel/UC1rIOwTqDuWkFj87HZYRFOg\",\"https://x.com/nytfood\"],\"logo\":[{\"url\":\"https://static01.nyt.com/applications/cooking/37f1abc/assets/SiteLogoRed.svg\",\"height\":31,\"width\":168,\"@type\":\"ImageObject\"},{\"url\":\"https://static01.nyt.com/applications/cooking/37f1abc/assets/SiteLogoBlack.svg\",\"height\":24,\"width\":131,\"@type\":\"ImageObject\"}]},{\"@type\":\"Organization\",\"name\":\"Wirecutter\",\"url\":\"https://www.nytimes.com/wirecutter/\",\"sameAs\":[\"https://www.facebook.com/thewirecutter/\",\"https://www.instagram.com/wirecutter/\",\"https://x.com/wirecutter/\",\"https://www.linkedin.com/company/the-wirecutter/\",\"https://www.youtube.com/wirecutter\"],\"logo\":{\"@type\":\"ImageObject\",\"url\":\"https://cdn.thewirecutter.com/wp-content/uploads/2020/05/nytimes-wirecutter-logo.png\",\"width\":266,\"height\":34}},{\"@type\":\"Organization\",\"name\":\"The Athletic\",\"url\":\"https://www.nytimes.com/athletic/\",\"sameAs\":[\"https://www.facebook.com/TheAthletic\",\"https://instagram.com/TheAthleticHQ\",\"https://x.com/TheAthletic\",\"https://www.linkedin.com/company/the-athletic-media-company/\",\"https://www.youtube.com/TheAthletic\"],\"logo\":{\"@type\":\"ImageObject\",\"url\":\"https://www.nytimes.com/athletic/app/themes/athletic/assets/img/open-graph-asset.png\",\"width\":266,\"height\":150}}]}"
+      ],
+      "meta_robots": null,
+      "canonical_url": "https://www.nytimes.com/ca/"
+    },
+    {
+      "requested_url": "https://www.nytimes.com/es/",
+      "final_url": "https://www.nytimes.com/es/",
+      "redirect_count": 0,
+      "status_code": 403,
+      "failure_type": null,
+      "type": "/es/",
+      "visible_text_length": 0,
+      "script_size": 0,
+      "page_size_bytes": 771,
+      "title": "",
+      "h1_present": false,
+      "h1_text": null,
+      "has_structured_data": false,
+      "jsonld_block_count": 0,
+      "jsonld_raw": [],
+      "meta_robots": null,
+      "canonical_url": null
+    },
+    {
+      "requested_url": "https://www.nytimes.com/section/todayspaper",
+      "final_url": "https://www.nytimes.com/section/todayspaper",
+      "redirect_count": 0,
+      "status_code": 200,
+      "failure_type": null,
+      "type": "/section/",
+      "visible_text_length": 5824,
+      "script_size": 621993,
+      "page_size_bytes": 708534,
+      "title": "Today's Paper - The New York Times",
+      "h1_present": true,
+      "h1_text": "Today\u2019s Paper",
+      "has_structured_data": true,
+      "jsonld_block_count": 2,
+      "jsonld_raw": [
+        "{\"@context\":\"https://schema.org\",\"@type\":\"CollectionPage\",\"description\":\"\",\"url\":\"https://www.nytimes.com/section/todayspaper\",\"inLanguage\":\"en\",\"name\":\"The New York Times in Print for Thursday, Sep. 10, 2026\",\"mainEntity\":{\"@context\":\"https://schema.org\",\"@type\":\"ItemList\",\"itemListElement\":[{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/08/us/politics/supreme-court-missouri-congressional-map.html\",\"position\":1},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/09/us/politics/trump-social-media-ai-reality.html\",\"position\":2},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/08/us/politics/trump-republicans-midterms-voters.html\",\"position\":3},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/09/business/canada-iran-war-trump-midterms.html\",\"position\":4},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/08/world/asia/china-nepal-border-flood-tibet-victims-messages.html\",\"position\":5},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/08/world/europe/china-arctic-shipping-trade-route.html\",\"position\":6},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/08/us/politics/cia-deputy-director-china.html\",\"position\":7},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/09/world/europe/norway-king-harald-funeral.html\",\"position\":8},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/interactive/2026/09/07/us/politics/midterm-elections-advantages.html\",\"position\":9},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/09/us/politics/trump-republican-midterm-convention.html\",\"position\":10},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/09/us/politics/new-hampshire-primaries-takeaways.html\",\"position\":11},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/06/obituaries/niels-refsgaard-dead.html\",\"position\":12},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/08/opinion/israel-us-elections-midterms-netanyahu-trump.html\",\"position\":13},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/08/opinion/september-11-al-qaeda-attacks.html\",\"position\":14},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/09/opinion/data-center-ai-resistance.html\",\"position\":15},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/07/opinion/gloria-steinem-aging-feminism.html\",\"position\":16},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/09/business/energy-environment/california-diablo-canyon-nuclear-energy.html\",\"position\":17},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/04/business/energy-environment/venezuela-oil-fields-betancourt-trump.html\",\"position\":18},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/08/us/canada-tariffs-us-relationship.html\",\"position\":19},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/09/business/saudi-arabia-houthis-red-sea-oil-shipping.html\",\"position\":20},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/09/arts/dance/bill-t-jones-world-trade-center-9-11.html\",\"position\":21},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/09/movies/film-festivals-studios-telluride.html\",\"position\":22},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/09/arts/music/suno-new-ai-model-warner-music.html\",\"position\":23},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/08/movies/elon-musk-film-alex-gibney-venice-film-festival.html\",\"position\":24},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/03/style/black-cookout-joy-tradition.html\",\"position\":25},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/02/style/ariana-grande-tour-jonathan-bailey.html\",\"position\":26},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/01/t-magazine/la-mama-bag-tote.html\",\"position\":27},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/06/style/tyler-bergantino-tall-tour-events.html\",\"position\":28},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/08/11/climate/electric-motorcycle-boom-developing-countries.html\",\"position\":29},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/10/pageoneplus/quote-of-the-day-a-refugees-detention-by-ice-set-a-clock-ticking.html\",\"position\":30}],\"numberOfItems\":30},\"publisher\":{\"@id\":\"https://www.nytimes.com/#publisher\",\"name\":\"The New York Times\"},\"copyrightHolder\":{\"@id\":\"https://www.nytimes.com/#publisher\",\"name\":\"The New York Times\"},\"sourceOrganization\":{\"@id\":\"https://www.nytimes.com/#publisher\",\"name\":\"The New York Times\"},\"copyrightYear\":2026}",
+        "{\"@context\":\"https://schema.org\",\"@type\":\"NewsMediaOrganization\",\"name\":\"The New York Times\",\"logo\":{\"@context\":\"https://schema.org\",\"@type\":\"ImageObject\",\"url\":\"https://static01.nyt.com/images/icons/t_logo_291_black.png\",\"height\":291,\"width\":291,\"contentUrl\":\"https://static01.nyt.com/images/icons/t_logo_291_black.png\",\"creditText\":\"The New York Times\"},\"url\":\"https://www.nytimes.com/\",\"@id\":\"https://www.nytimes.com/#publisher\",\"publishingPrinciples\":\"https://www.nytimes.com/editorial-standards/ethical-journalism.html\",\"diversityPolicy\":\"https://www.nytco.com/company/diversity-and-inclusion/\",\"ethicsPolicy\":\"https://www.nytco.com/company/standards-ethics/\",\"masthead\":\"https://www.nytimes.com/interactive/2023/01/28/admin/the-new-york-times-masthead.html\",\"foundingDate\":\"1851-09-18\",\"sameAs\":\"https://en.wikipedia.org/wiki/The_New_York_Times\"}"
+      ],
+      "meta_robots": null,
+      "canonical_url": "https://www.nytimes.com/section/todayspaper"
+    },
+    {
+      "requested_url": "https://www.nytimes.com/2026/09/10/world/asia/25-years-after-9-11-al-qaeda-still-has-a-home-in-afghanistan.html",
+      "final_url": "https://www.nytimes.com/2026/09/10/world/asia/25-years-after-9-11-al-qaeda-still-has-a-home-in-afghanistan.html",
+      "redirect_count": 0,
+      "status_code": 403,
+      "failure_type": null,
+      "type": "/2026/",
+      "visible_text_length": 0,
+      "script_size": 0,
+      "page_size_bytes": 771,
+      "title": "",
+      "h1_present": false,
+      "h1_text": null,
+      "has_structured_data": false,
+      "jsonld_block_count": 0,
+      "jsonld_raw": [],
+      "meta_robots": null,
+      "canonical_url": null
+    },
+    {
+      "requested_url": "https://www.nytimes.com/2026/09/10/world/asia/afghanistan-war-photojournalism.html",
+      "final_url": "https://www.nytimes.com/2026/09/10/world/asia/afghanistan-war-photojournalism.html",
+      "redirect_count": 0,
+      "status_code": 403,
+      "failure_type": null,
+      "type": "/2026/",
+      "visible_text_length": 0,
+      "script_size": 0,
+      "page_size_bytes": 771,
+      "title": "",
+      "h1_present": false,
+      "h1_text": null,
+      "has_structured_data": false,
+      "jsonld_block_count": 0,
+      "jsonld_raw": [],
+      "meta_robots": null,
+      "canonical_url": null
+    },
+    {
+      "requested_url": "https://www.nytimes.com/2026/09/10/world/europe/germany-russia-afd-putin.html",
+      "final_url": "https://www.nytimes.com/2026/09/10/world/europe/germany-russia-afd-putin.html",
+      "redirect_count": 0,
+      "status_code": 403,
+      "failure_type": null,
+      "type": "/2026/",
+      "visible_text_length": 0,
+      "script_size": 0,
+      "page_size_bytes": 771,
+      "title": "",
+      "h1_present": false,
+      "h1_text": null,
+      "has_structured_data": false,
+      "jsonld_block_count": 0,
+      "jsonld_raw": [],
+      "meta_robots": null,
+      "canonical_url": null
+    },
+    {
+      "requested_url": "https://www.nytimes.com/news-event/2026-midterm-elections",
+      "final_url": "https://www.nytimes.com/news-event/2026-midterm-elections",
+      "redirect_count": 0,
+      "status_code": 200,
+      "failure_type": null,
+      "type": "/news-event/",
+      "visible_text_length": 8544,
+      "script_size": 661437,
+      "page_size_bytes": 823445,
+      "title": "2026 Midterm Elections - The New York Times",
+      "h1_present": true,
+      "h1_text": "2026 Midterm Elections",
+      "has_structured_data": true,
+      "jsonld_block_count": 3,
+      "jsonld_raw": [
+        "{\"@context\":\"https://schema.org\",\"@type\":\"CollectionPage\",\"description\":\"\",\"url\":\"https://www.nytimes.com/news-event/2026-midterm-elections\",\"inLanguage\":\"en\",\"name\":\"2026 Midterm Elections\",\"mainEntity\":{\"@context\":\"https://schema.org\",\"@type\":\"ItemList\",\"itemListElement\":[{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/live/2026/09/09/us/rnc-trump-midterm-convention-updates\",\"position\":1},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/interactive/2026/09/09/us/elections/results-rhode-island-primary.html\",\"position\":2},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/09/us/missouri-redistricting-congress-contempt.html\",\"position\":3},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/09/us/politics/trump-midterms-maga-inc-spending.html\",\"position\":4},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/08/us/politics/trump-republicans-midterms-voters.html\",\"position\":5},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/09/us/politics/new-hampshire-primaries-takeaways.html\",\"position\":6},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/09/us/new-hampshire-primary-shaheen-sullivan.html\",\"position\":7},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/08/us/politics/new-hampshire-primary-dilorenzo-noveletsky.html\",\"position\":8},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/08/us/politics/new-hampshire-republican-senate-primary.html\",\"position\":9},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/interactive/polls/donald-trump-approval-rating-polls.html\",\"position\":10},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/interactive/polls/congressional-vote-2026.html\",\"position\":11},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/interactive/polls/michigan-us-senate-election-polls-2026.html\",\"position\":12},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/interactive/polls/texas-us-senate-election-polls-2026.html\",\"position\":13},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/interactive/polls/virginia-us-senate-election-polls-2026.html\",\"position\":14},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/09/us/politics/republican-senate-candidates-trump-convention.html\",\"position\":15},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/09/us/politics/angie-nixon-alexandria-ocasio-cortez-florida.html\",\"position\":16},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/09/us/politics/john-fetterman-trump-republican-convention.html\",\"position\":17},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/09/us/politics/talarico-republican-midterm-convention-counterprogramming.html\",\"position\":18},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/interactive/2026/09/09/us/elections/results-rhode-island-us-senate-primary.html\",\"position\":19},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/interactive/2026/09/09/us/elections/results-rhode-island-us-house-2-primary.html\",\"position\":20},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/interactive/2026/09/09/us/elections/results-rhode-island-us-house-1-primary.html\",\"position\":21},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/08/us/politics/supreme-court-missouri-congressional-map.html\",\"position\":22},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/interactive/2026/09/08/us/elections/results-new-hampshire-us-house-2-primary.html\",\"position\":23},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/interactive/2026/09/08/us/elections/results-new-hampshire-primary.html\",\"position\":24},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/10/us/politics/department-of-justice-election-fraud-states.html\",\"position\":25},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/10/us/politics/republican-midterm-convention-socialism-fears.html\",\"position\":26},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/10/business/media/ai-chatbots-election-misinformation.html\",\"position\":27},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/video/us/politics/100000011143657/trump-dividend-5000-checks-midterms.html\",\"position\":28},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/10/us/politics/trump-dividend-5000-dollar-checks.html\",\"position\":29},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"url\":\"https://www.nytimes.com/2026/09/10/us/politics/trump-republican-convention-speech-takeaways.html\",\"position\":30}],\"numberOfItems\":30},\"publisher\":{\"@id\":\"https://www.nytimes.com/#publisher\",\"name\":\"The New York Times\"},\"copyrightHolder\":{\"@id\":\"https://www.nytimes.com/#publisher\",\"name\":\"The New York Times\"},\"sourceOrganization\":{\"@id\":\"https://www.nytimes.com/#publisher\",\"name\":\"The New York Times\"},\"copyrightYear\":2026}",
+        "{\"@context\":\"https://schema.org\",\"@type\":\"NewsMediaOrganization\",\"name\":\"The New York Times\",\"logo\":{\"@context\":\"https://schema.org\",\"@type\":\"ImageObject\",\"url\":\"https://static01.nyt.com/images/icons/t_logo_291_black.png\",\"height\":291,\"width\":291,\"contentUrl\":\"https://static01.nyt.com/images/icons/t_logo_291_black.png\",\"creditText\":\"The New York Times\"},\"url\":\"https://www.nytimes.com/\",\"@id\":\"https://www.nytimes.com/#publisher\",\"publishingPrinciples\":\"https://www.nytimes.com/editorial-standards/ethical-journalism.html\",\"diversityPolicy\":\"https://www.nytco.com/company/diversity-and-inclusion/\",\"ethicsPolicy\":\"https://www.nytco.com/company/standards-ethics/\",\"masthead\":\"https://www.nytimes.com/interactive/2023/01/28/admin/the-new-york-times-masthead.html\",\"foundingDate\":\"1851-09-18\",\"sameAs\":\"https://en.wikipedia.org/wiki/The_New_York_Times\"}",
+        "{\"@context\":\"https://schema.org\",\"@type\":\"BreadcrumbList\",\"itemListElement\":[{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"name\":\"U.S.\",\"position\":1,\"item\":\"https://www.nytimes.com/section/us\"},{\"@context\":\"https://schema.org\",\"@type\":\"ListItem\",\"name\":\"Politics\",\"position\":2,\"item\":\"https://www.nytimes.com/section/politics\"}]}"
+      ],
+      "meta_robots": null,
+      "canonical_url": "https://www.nytimes.com/news-event/2026-midterm-elections"
+    },
+    {
+      "requested_url": "https://www.nytimes.com/interactive/2026/09/09/us/elections/results-rhode-island-primary.html",
+      "final_url": "https://www.nytimes.com/interactive/2026/09/09/us/elections/results-rhode-island-primary.html",
+      "redirect_count": 0,
+      "status_code": 403,
+      "failure_type": null,
+      "type": "/interactive/",
+      "visible_text_length": 0,
+      "script_size": 0,
+      "page_size_bytes": 771,
+      "title": "",
+      "h1_present": false,
+      "h1_text": null,
+      "has_structured_data": false,
+      "jsonld_block_count": 0,
+      "jsonld_raw": [],
+      "meta_robots": null,
+      "canonical_url": null
+    },
+    {
+      "requested_url": "https://www.nytimes.com/live/2026/us/times-election-results-explained",
+      "final_url": "https://www.nytimes.com/live/2026/us/times-election-results-explained",
+      "redirect_count": 0,
+      "status_code": 403,
+      "failure_type": null,
+      "type": "/live/",
+      "visible_text_length": 0,
+      "script_size": 0,
+      "page_size_bytes": 771,
+      "title": "",
+      "h1_present": false,
+      "h1_text": null,
+      "has_structured_data": false,
+      "jsonld_block_count": 0,
+      "jsonld_raw": [],
+      "meta_robots": null,
+      "canonical_url": null
+    }
+  ],
+  "render_check": {
+    "status": "completed",
+    "render_sampled": true,
+    "pages_rendered": [
+      "https://www.nytimes.com/ca/",
+      "https://www.nytimes.com/news-event/2026-midterm-elections"
+    ],
+    "pages": [
+      {
+        "url": "https://www.nytimes.com",
+        "page_type": "homepage",
+        "render_failed": true
+      },
+      {
+        "url": "https://www.nytimes.com/international/",
+        "page_type": "/international/",
+        "render_failed": true
+      },
+      {
+        "url": "https://www.nytimes.com/ca/",
+        "page_type": "/ca/",
+        "raw_text_len": 6940,
+        "rendered_text_len": 57100,
+        "text_delta_ratio": 0.88,
+        "raw_title": "The New York Times Canada - Breaking News, US News, World News, Videos",
+        "rendered_title": "The New York Times Canada - Breaking News, US News, World News, Videos",
+        "h1_present_raw": true,
+        "h1_present_rendered": true,
+        "jsonld_blocks_raw": 2,
+        "jsonld_blocks_rendered": 2,
+        "main_content_source": "client_fetch",
+        "noscript_fallback_len": 0
+      },
+      {
+        "url": "https://www.nytimes.com/section/todayspaper",
+        "page_type": "/section/",
+        "render_failed": true
+      },
+      {
+        "url": "https://www.nytimes.com/news-event/2026-midterm-elections",
+        "page_type": "/news-event/",
+        "raw_text_len": 8544,
+        "rendered_text_len": 41054,
+        "text_delta_ratio": 0.79,
+        "raw_title": "2026 Midterm Elections - The New York Times",
+        "rendered_title": "2026 Midterm Elections - The New York Times",
+        "h1_present_raw": true,
+        "h1_present_rendered": true,
+        "jsonld_blocks_raw": 3,
+        "jsonld_blocks_rendered": 3,
+        "main_content_source": "client_fetch",
+        "noscript_fallback_len": 0
+      }
+    ],
+    "template_inconsistent": false
+  },
+  "crawl_summary": {
+    "pages_attempted": 12,
+    "pages_succeeded": 6,
+    "pages_failed": 6,
+    "pages_rendered": 5
+  }
+}
