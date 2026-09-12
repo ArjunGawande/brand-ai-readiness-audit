@@ -39,11 +39,8 @@ AGENT_ROLES = {
 # otherwise we treat it as a stripped/challenge response.
 TEXT_RATIO_FLOOR = 0.2
 
-# text_delta_ratio from the crawler's render-gap check: fraction of content
-# that only appears after JavaScript runs. Above this, flag as JS-dependent.
-RENDER_DELTA_HIGH = 0.5     # severity: high
-RENDER_DELTA_CRITICAL = 0.85  # severity: critical
-
+# text_delta_ratio from the crawler's render-gap check is now handled by
+# the dedicated render-gap-audit skill.
 
 # ---------------------------------------------------------------------------
 # Finding helper
@@ -218,58 +215,6 @@ def check_ua_probe(data: dict) -> list:
     return results
 
 
-# ---------------------------------------------------------------------------
-# Check D — JS-render gap (uses the crawler's own Playwright comparison)
-# ---------------------------------------------------------------------------
-
-def check_render_gap(data: dict) -> tuple:
-    """Returns (findings, coverage_notes). Coverage notes are audit
-    limitations, not site problems, so they're kept separate."""
-    render = data.get("render_check", {})
-    status = render.get("status")
-
-    if status == "unavailable":
-        return [], [
-            "JS-render comparison was not run (Playwright not installed on the "
-            "audit machine). Cannot confirm whether sampled pages depend on "
-            "JavaScript for their content."
-        ]
-    if status == "skipped":
-        return [], ["JS-render comparison found no eligible pages to sample."]
-    if status == "error":
-        return [], [f"JS-render comparison failed to complete: {render.get('reason', 'unknown error')}."]
-
-    findings = []
-    coverage_notes = []
-
-    for p in render.get("pages", []):
-        if p.get("render_failed"):
-            coverage_notes.append(f"Could not render {p.get('url')} for JS-gap comparison.")
-            continue
-
-        delta = p.get("text_delta_ratio", 0)
-        if delta < RENDER_DELTA_HIGH:
-            continue
-
-        severity = "critical" if delta >= RENDER_DELTA_CRITICAL else "high"
-        findings.append(finding(
-            f"Page under {p.get('page_type')} depends on JavaScript for most of its content",
-            severity,
-            f"{p.get('url')}: raw HTML has {p.get('raw_text_len')} chars of text, "
-            f"fully rendered DOM has {p.get('rendered_text_len')} chars — "
-            f"{round(delta * 100)}% of the content only appears after JavaScript runs.",
-            "Server-side render or statically pre-render this template. Most AI "
-            "crawlers do not execute JavaScript and will see only the raw HTML version.",
-        ))
-
-    if render.get("template_inconsistent"):
-        coverage_notes.append(
-            "Pages of the same type showed inconsistent JS-dependency (delta varied "
-            "by more than 0.3 within a type) — rendering behaviour may not be "
-            "uniform across that template; treat single-page findings with caution."
-        )
-
-    return findings, coverage_notes
 
 
 # ---------------------------------------------------------------------------
@@ -331,14 +276,11 @@ def analyze(data: dict) -> dict:
         # beats a pile of granular ones built on no data.
         findings = blocked + check_robots(data)
     else:
-        render_findings, render_notes = check_render_gap(data)
-        coverage_notes.extend(render_notes)
         findings = (
             check_robots(data)
             + check_ua_probe(data)
             + check_broken_links(data)
             + check_noindex(data)
-            + render_findings
         )
 
     for i, f in enumerate(findings, start=1):

@@ -1,6 +1,6 @@
 {
   "site": "https://aionyix.com",
-  "crawled_at": "2026-09-10T09:57:00.567608+00:00Z",
+  "crawled_at": "2026-09-12T04:47:13.663784+00:00",
   "our_agent": "BrandAuditBot/1.0 (+https://example.org/audit; read-only)",
   "robots_txt": {
     "found": true,
@@ -13,7 +13,28 @@
       "PerplexityBot": "allowed",
       "CCBot": "allowed",
       "Google-Extended": "allowed"
-    }
+    },
+    "sitemap_urls": [
+      "https://aionyix.com/sitemap.xml"
+    ]
+  },
+  "sitemap": {
+    "found": true,
+    "source": "https://aionyix.com/sitemap.xml",
+    "is_index": false,
+    "url_count": 3,
+    "urls": [
+      "https://aionyix.com/",
+      "https://aionyix.com/technology",
+      "https://aionyix.com/team"
+    ],
+    "truncated": false
+  },
+  "llms_txt": {
+    "found": false,
+    "url": "https://aionyix.com/llms.txt",
+    "byte_length": 0,
+    "link_count": 0
   },
   "ua_probe": {
     "url_tested": "https://aionyix.com",
@@ -61,6 +82,14 @@
       "failure_type": null,
       "type": "homepage",
       "visible_text_length": 4329,
+      "visible_text_snippet": "AIONYIX Your Vision, Our Precision. Initializing Aionyix... 0 % Complete $ _ About Us Our Solutions Technologies We Use Meet the Team Get In Touch const aionyix = () => { return innovation; }; scale(\u221e) <Fintech /> { edtech: true } npm run build git push origin main AIONYIX Your Vision, Our Precision. We craft intelligent systems that scale across industries with fintech and edtech at the core, powered by deep tech and clean design. Explore Our Capabilities Discuss a Project with Us! Scroll to explore $ cat ./about Tech that understands you Aionyix builds with technology at heart. We are focuse",
+      "text_stats": {
+        "char_count": 4329,
+        "digit_count": 24,
+        "digit_density": 0.00554,
+        "sentence_count": 43,
+        "longest_paragraph": 2911
+      },
       "script_size": 592,
       "page_size_bytes": 61734,
       "title": "Aionyix Solutions",
@@ -82,6 +111,14 @@
       "failure_type": null,
       "type": "/technology/",
       "visible_text_length": 3005,
+      "visible_text_snippet": "AIONYIX Your Vision, Our Precision. Initializing Aionyix... 0 % Complete $ _ About Us Our Solutions Technologies We Use Meet the Team Get In Touch ./tech-stack Built with Enterprise-Grade  Technology Built on technologies trusted by global enterprises, your platform stays fast, secure, and effortlessly scalable. Lightning Fast Sub-100ms response times keep your users engaged and reduce bounce rates Always Available 99.9% uptime means your business never stops - even during peak traffic Bug-Free Code Type safety prevents costly errors and reduces maintenance overhead Grows With You Auto-scaling",
+      "text_stats": {
+        "char_count": 3005,
+        "digit_count": 24,
+        "digit_density": 0.00799,
+        "sentence_count": 15,
+        "longest_paragraph": 2816
+      },
       "script_size": 800,
       "page_size_bytes": 38118,
       "title": "Technology - Aionyix Solutions | Our Tech Stack",
@@ -103,6 +140,14 @@
       "failure_type": null,
       "type": "/team/",
       "visible_text_length": 1293,
+      "visible_text_snippet": "AIONYIX Your Vision, Our Precision. Initializing Aionyix... 0 % Complete $ _ About Us Our Solutions Technologies We Use Meet the Team Get In Touch ./team --all Meet the Team A diverse group of passionate builders, creators, and problem-solvers working together to build the future. Leadership Rohit Pardeshi CEO & Founder Veebhuti Bhatia COO Development Team Aashlesh Wawge Full Stack Developer Arjun Gawande Full Stack Developer Prabhu Anpat Full Stack Developer Soham Phadke Full Stack Developer Veda Kimbahune Full Stack Developer Our Culture & Values We believe in ownership, rapid prototyping, m",
+      "text_stats": {
+        "char_count": 1293,
+        "digit_count": 17,
+        "digit_density": 0.01315,
+        "sentence_count": 12,
+        "longest_paragraph": 1293
+      },
       "script_size": 741,
       "page_size_bytes": 46664,
       "title": "Team - Aionyix Solutions | Meet Our Founder",
@@ -132,6 +177,7 @@
         "raw_text_len": 4329,
         "rendered_text_len": 4250,
         "text_delta_ratio": 0.0,
+        "text_delta_signed": -0.02,
         "raw_title": "Aionyix Solutions",
         "rendered_title": "Aionyix Solutions",
         "h1_present_raw": true,
@@ -147,6 +193,7 @@
         "raw_text_len": 3005,
         "rendered_text_len": 2927,
         "text_delta_ratio": 0.0,
+        "text_delta_signed": -0.03,
         "raw_title": "Technology - Aionyix Solutions | Our Tech Stack",
         "rendered_title": "Technology - Aionyix Solutions | Our Tech Stack",
         "h1_present_raw": true,
@@ -162,6 +209,7 @@
         "raw_text_len": 1293,
         "rendered_text_len": 1216,
         "text_delta_ratio": 0.0,
+        "text_delta_signed": -0.06,
         "raw_title": "Team - Aionyix Solutions | Meet Our Founder",
         "rendered_title": "Team - Aionyix Solutions | Meet Our Founder",
         "h1_present_raw": true,
@@ -173,6 +221,13 @@
       }
     ],
     "template_inconsistent": false
+  },
+  "coverage": {
+    "links_discovered": 3,
+    "urls_known": 3,
+    "pages_sampled": 3,
+    "sitemap_url_count": 3,
+    "discovery_method": "sitemap"
   },
   "crawl_summary": {
     "pages_attempted": 3,

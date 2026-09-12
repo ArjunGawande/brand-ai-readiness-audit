@@ -2,9 +2,9 @@
 """
 Simple site crawler for the AI-readiness audit.
 Checks robots.txt rules, probes multiple AI bot UAs vs a browser,
-detects render gaps (raw HTML vs JS-rendered DOM), samples pages,
-and prints one JSON evidence file. Makes no judgments —
-that's the analyzer skill's job.
+detects render gaps (raw HTML vs JS-rendered DOM), discovers the site's own
+URL inventory via sitemap, samples pages, and prints one JSON evidence file.
+Makes no judgments — that's the analyzer skill's job.
 
 Usage: python crawl.py https://example.com
 """
@@ -12,7 +12,6 @@ Usage: python crawl.py https://example.com
 import asyncio
 import datetime
 import json
-import re
 import sys
 from collections import defaultdict
 from urllib.parse import urljoin, urlparse
@@ -45,6 +44,15 @@ DELAY_SECONDS = 0.3  # politeness delay between page fetches
 RENDER_SAMPLE_LIMIT = 5          # max pages to render with Playwright
 RENDER_WAIT_MS = 3000            # wait for JS to settle after load
 THIN_TEXT_THRESHOLD = 500        # raw text below this → worth rendering
+
+# Feature 8: Sitemap config
+SITEMAP_URL_CAP = 1000           # keep the evidence file a sane size
+SITEMAP_INDEX_CAP = 5            # how many child sitemaps to expand
+
+# Feature 10: how much visible text to keep per page.
+# WAS 200 — too short for any downstream statistic to mean anything.
+SNIPPET_CHARS = 600
+
 
 # ---------------------------------------------------------------------------
 # Feature 5: Smarter fetch — categorizes failures instead of returning None
@@ -88,6 +96,45 @@ async def fetch(client: httpx.AsyncClient, url: str, ua: str) -> dict:
     except httpx.HTTPError as e:
         # Catch-all for anything else (protocol errors, etc.)
         return {"ok": False, "failure_type": f"http_error:{type(e).__name__}", "status_code": None, "body": "", "content_length": 0, "final_url": None, "redirect_count": 0}
+
+
+# ---------------------------------------------------------------------------
+# Feature 9: text_stats — full-text numbers, computed BEFORE truncation
+# ---------------------------------------------------------------------------
+# WHY THIS EXISTS:
+# We keep only a snippet of each page's text, because storing full page text
+# would bloat the evidence file. But downstream skills want to ask things like
+# "how concrete is this site's prose?" — and computing that from a truncated
+# snippet is measuring noise, not the page.
+#
+# Computing the statistics here, while we still hold the full text, costs
+# nothing and hands downstream skills a stable number instead of a guess.
+#
+# digit_density is the useful one: prose with no digits has no dates, counts,
+# prices or measurable claims — nothing an AI can lift and quote as a fact.
+
+def text_stats(visible_text: str) -> dict:
+    """Compute statistics over the FULL visible text, before truncation."""
+    if not visible_text:
+        return {
+            "char_count": 0, "digit_count": 0, "digit_density": 0.0,
+            "sentence_count": 0, "longest_paragraph": 0,
+        }
+
+    digits = sum(1 for c in visible_text if c.isdigit())
+    sentences = (visible_text.count(".") + visible_text.count("!")
+                 + visible_text.count("?"))
+    # selectolax joins block elements with the separator, so a double space is
+    # a rough proxy for a paragraph boundary.
+    paragraphs = [seg.strip() for seg in visible_text.split("  ") if seg.strip()]
+
+    return {
+        "char_count": len(visible_text),
+        "digit_count": digits,
+        "digit_density": round(digits / len(visible_text), 5),
+        "sentence_count": sentences,
+        "longest_paragraph": max((len(p) for p in paragraphs), default=0),
+    }
 
 
 # ---------------------------------------------------------------------------
@@ -139,7 +186,8 @@ def analyze_html(html: str) -> dict:
 
     return {
         "visible_text_length": len(visible_text),
-        "visible_text_snippet": visible_text[:200],   # first 200 chars for quick inspection
+        "visible_text_snippet": visible_text[:SNIPPET_CHARS],   # Feature 10
+        "text_stats": text_stats(visible_text),                 # Feature 9
         "script_size": script_bytes,
         "title": title.text(strip=True) if title else "",
         "h1_present": h1_present,                      # Feature 7
@@ -152,31 +200,72 @@ def analyze_html(html: str) -> dict:
     }
 
 
+def empty_page_info() -> dict:
+    """
+    What we record for a page we could not read. Kept as a function so it can
+    never be mutated by accident, and so its keys stay in lockstep with
+    analyze_html — a missing key here is a KeyError 200 lines later.
+    """
+    return {
+        "visible_text_length": 0,
+        "visible_text_snippet": "",
+        "text_stats": text_stats(""),
+        "script_size": 0,
+        "title": "",
+        "h1_present": False,
+        "h1_text": None,
+        "has_structured_data": False,
+        "jsonld_block_count": 0,
+        "jsonld_raw": [],
+        "meta_robots": None,
+        "canonical_url": None,
+    }
+
+
 # ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------
 
-def parse_robots(text: str, agents: list) -> dict:
-    """Tiny robots.txt reader: 'allowed'/'blocked' per agent."""
+# Feature 8a: robots.txt now also yields the Sitemap: directive.
+# WHY: the old parser read user-agent and disallow and silently dropped every
+#      other field. Sitemap: was one of the dropped ones — and it is the most
+#      valuable line in the file for us, because it hands over the site's own
+#      list of every page it wants crawled. That list is what turns
+#      "I didn't find a pricing page" into "the sitemap lists 34 URLs and none
+#      of them is pricing" — a provable claim instead of a guess.
+
+def parse_robots(text: str, agents: list) -> tuple:
+    """
+    Tiny robots.txt reader.
+    Returns (rules_by_agent, sitemap_urls).
+    """
     rules = defaultdict(list)
+    sitemap_urls = []
     current = []
+
     for line in text.splitlines():
         line = line.split("#", 1)[0].strip()
         if not line or ":" not in line:
             continue
         field, _, value = line.partition(":")
         field, value = field.strip().lower(), value.strip()
+
         if field == "user-agent":
             current = [value]
         elif field == "disallow" and value:
             for agent in current:
                 rules[agent].append(value)
+        elif field == "sitemap" and value:
+            # Sitemap directives are global — they are NOT scoped to the
+            # preceding user-agent block, so collect them unconditionally.
+            sitemap_urls.append(value)
 
     result = {}
     for agent in agents:
         blocked = rules.get(agent) or rules.get("*", [])
         result[agent] = "blocked" if "/" in blocked else "allowed"
-    return result
+
+    return result, sitemap_urls
 
 
 def page_type(url: str) -> str:
@@ -194,6 +283,110 @@ def internal_links(base_url: str, html: str) -> list:
             seen.add(full)
             links.append(full)
     return links
+
+
+# ---------------------------------------------------------------------------
+# Feature 8b: Sitemap discovery
+# ---------------------------------------------------------------------------
+# WHY THIS EXISTS:
+# We sample at most MAX_PAGES pages. On a 400-page site that is 3% of it.
+# Any downstream claim of the form "the site has no X page" is then a guess —
+# and a guess anyone can disprove in one click.
+#
+# A sitemap fixes this without costing crawl budget: we do not FETCH the listed
+# pages, we only read their URLs. Knowing a page exists is enough to stop us
+# claiming it does not.
+#
+# SITEMAP INDEXES:
+# Large sites publish a sitemap whose entries point at OTHER sitemaps rather
+# than at pages. Treating that index as a page list would report "4 URLs" for
+# a site with 40,000. We detect the <sitemapindex> wrapper and expand a
+# bounded number of children.
+
+def _extract_locs(xml_text: str) -> list:
+    """Pull <loc> values out of sitemap XML."""
+    tree = HTMLParser(xml_text)
+    return [node.text(strip=True) for node in tree.css("loc") if node.text(strip=True)]
+
+
+async def fetch_sitemap(client, site_url: str, from_robots: list) -> dict:
+    """
+    Try every sitemap named in robots.txt, then /sitemap.xml as a fallback.
+    Returns a dict describing what we found — never raises.
+    """
+    candidates = list(from_robots) + [urljoin(site_url, "/sitemap.xml")]
+
+    for candidate in candidates:
+        resp = await fetch(client, candidate, OUR_UA)
+        if not resp["ok"] or resp["status_code"] != 200:
+            continue
+
+        body = resp["body"]
+        if "<loc" not in body.lower():
+            continue
+
+        locs = _extract_locs(body)
+        if not locs:
+            continue
+
+        # Detect an index by its wrapper tag, not by guessing from .xml
+        # suffixes — some sites legitimately serve pages at .xml paths.
+        if "<sitemapindex" in body.lower():
+            page_urls = []
+            for child in locs[:SITEMAP_INDEX_CAP]:
+                child_resp = await fetch(client, child, OUR_UA)
+                if child_resp["ok"] and child_resp["status_code"] == 200:
+                    page_urls.extend(_extract_locs(child_resp["body"]))
+            return {
+                "found": True,
+                "source": candidate,
+                "is_index": True,
+                "child_sitemaps": len(locs),
+                "child_sitemaps_expanded": min(len(locs), SITEMAP_INDEX_CAP),
+                "url_count": len(page_urls),
+                "urls": page_urls[:SITEMAP_URL_CAP],
+                "truncated": len(page_urls) > SITEMAP_URL_CAP or len(locs) > SITEMAP_INDEX_CAP,
+            }
+
+        return {
+            "found": True,
+            "source": candidate,
+            "is_index": False,
+            "url_count": len(locs),
+            "urls": locs[:SITEMAP_URL_CAP],
+            "truncated": len(locs) > SITEMAP_URL_CAP,
+        }
+
+    return {
+        "found": False, "source": None, "is_index": False,
+        "url_count": 0, "urls": [], "truncated": False,
+    }
+
+
+# ---------------------------------------------------------------------------
+# Feature 8c: llms.txt
+# ---------------------------------------------------------------------------
+# A short machine-readable index pointing AI crawlers at a site's canonical
+# content instead of making them infer structure from navigation. One request;
+# we record presence and size, and leave judgment to the analyzer.
+
+async def fetch_llms_txt(client, site_url: str) -> dict:
+    url = urljoin(site_url, "/llms.txt")
+    resp = await fetch(client, url, OUR_UA)
+    if resp["ok"] and resp["status_code"] == 200 and resp["body"].strip():
+        body = resp["body"]
+        # Guard against SPA catch-all routing: a site that serves index.html
+        # for every unknown path would otherwise register a phantom llms.txt.
+        if "<html" in body[:500].lower():
+            return {"found": False, "url": url, "byte_length": 0,
+                    "link_count": 0, "note": "served HTML, not a text file"}
+        return {
+            "found": True,
+            "url": url,
+            "byte_length": len(body.encode("utf-8")),
+            "link_count": body.count("]("),   # markdown links, the usual format
+        }
+    return {"found": False, "url": url, "byte_length": 0, "link_count": 0}
 
 
 # ---------------------------------------------------------------------------
@@ -241,7 +434,7 @@ async def render_page(browser, url: str) -> dict | None:
         # Analyze the rendered version the same way we analyze raw HTML
         info = analyze_html(rendered_html)
         return info
-    except Exception as e:
+    except Exception:
         return None
 
 
@@ -326,6 +519,10 @@ async def render_gap_check(pages_checked: list) -> dict:
                     "raw_text_len": raw_len,
                     "rendered_text_len": rendered_len,
                     "text_delta_ratio": max(delta, 0.0),  # clamp: raw can be bigger due to noscript fallback
+                    # Keep the SIGNED value too. A consistently negative delta
+                    # means an element is removed on hydration — real signal
+                    # that the clamp above would otherwise hide completely.
+                    "text_delta_signed": delta,
                     "raw_title": page_data["title"],
                     "rendered_title": rendered["title"],
                     "h1_present_raw": page_data["h1_present"],
@@ -365,12 +562,20 @@ async def render_gap_check(pages_checked: list) -> dict:
 # ---------------------------------------------------------------------------
 
 async def crawl(site_url: str) -> dict:
+    site_url = site_url.strip()
+    if not site_url.startswith(("http://", "https://")):
+        site_url = f"https://{site_url}"
+
     async with httpx.AsyncClient() as client:
 
         # ---- 1. robots.txt ----
         robots_result = await fetch(client, urljoin(site_url, "/robots.txt"), OUR_UA)
         robots_text = robots_result["body"] if robots_result["ok"] and robots_result["status_code"] == 200 else ""
-        rules = parse_robots(robots_text, ROBOTS_AGENTS) if robots_text else {}
+        # Feature 8a: now returns a tuple — rules AND any Sitemap: directives
+        if robots_text:
+            rules, robots_sitemaps = parse_robots(robots_text, ROBOTS_AGENTS)
+        else:
+            rules, robots_sitemaps = {}, []
 
         # ---- 2. UA probe on homepage — Feature 2: now 4 identities, not 2 ----
         # OLD CODE: only compared Chrome vs GPTBot
@@ -408,59 +613,90 @@ async def crawl(site_url: str) -> dict:
                 "failure_type": resp["failure_type"],
             })
 
-        # ---- 3. Sample pages from homepage links ----
+        # ---- 3. Sitemap + llms.txt — Feature 8 ----
+        # Done before page sampling, so the sitemap can widen what we sample.
+        sitemap_data = await fetch_sitemap(client, site_url, robots_sitemaps)
+        llms_data = await fetch_llms_txt(client, site_url)
+
+        # ---- 4. Sample pages ----
+        # Feature 8d: capture the DENOMINATOR, not just the numerator.
+        # "3 pages checked" cannot distinguish a 3-page site from a truncated
+        # crawl of a 300-page one, and without that distinction every
+        # downstream "the site has no X page" claim is unfounded.
         pages_checked = []
+        links_discovered = 0
+        candidate_urls = []
+
         if chrome["ok"] and chrome["status_code"] == 200:
-            for url in internal_links(site_url, chrome["body"])[:MAX_PAGES]:
-                resp = await fetch(client, url, OUR_UA)
-                await asyncio.sleep(DELAY_SECONDS)
+            homepage_links = internal_links(site_url, chrome["body"])
+            links_discovered = len(homepage_links)
+            candidate_urls = list(homepage_links)
 
-                if resp["ok"] and resp["status_code"] == 200:
-                    info = analyze_html(resp["body"])
-                else:
-                    info = {
-                        "visible_text_length": 0, "script_size": 0, "title": "",
-                        "h1_present": False, "h1_text": None,
-                        "has_structured_data": False, "jsonld_block_count": 0, "jsonld_raw": [],
-                        "meta_robots": None, "canonical_url": None, "visible_text_snippet": "",
-                    }
+            # If the sitemap knows about pages the homepage does not link to,
+            # add them to the sample. A page two clicks deep is exactly what an
+            # AI crawler misses — and exactly what we want to have looked at.
+            if sitemap_data["found"]:
+                seen = set(candidate_urls)
+                for url in sitemap_data["urls"]:
+                    if urlparse(url).netloc == urlparse(site_url).netloc and url not in seen:
+                        seen.add(url)
+                        candidate_urls.append(url)
 
-                pages_checked.append({
-                    "requested_url": url,
-                    "final_url": resp["final_url"],
-                    "redirect_count": resp["redirect_count"],
-                    "status_code": resp["status_code"],
-                    "failure_type": resp["failure_type"],       # Feature 5
-                    "type": page_type(url),
-                    "visible_text_length": info["visible_text_length"],
-                    "script_size": info["script_size"],
-                    "page_size_bytes": resp["content_length"],
-                    "title": info["title"],
-                    "h1_present": info["h1_present"],           # Feature 7
-                    "h1_text": info["h1_text"],                 # Feature 7
-                    "has_structured_data": info["has_structured_data"],
-                    "jsonld_block_count": info["jsonld_block_count"],
-                    "jsonld_raw": info["jsonld_raw"],
-                    "meta_robots": info["meta_robots"],
-                    "canonical_url": info["canonical_url"],
-                })
+        for url in candidate_urls[:MAX_PAGES]:
+            resp = await fetch(client, url, OUR_UA)
+            await asyncio.sleep(DELAY_SECONDS)
 
-        # ---- 4. Render-gap check — Feature 1 ----
+            if resp["ok"] and resp["status_code"] == 200:
+                info = analyze_html(resp["body"])
+            else:
+                info = empty_page_info()
+
+            pages_checked.append({
+                "requested_url": url,
+                "final_url": resp["final_url"],
+                "redirect_count": resp["redirect_count"],
+                "status_code": resp["status_code"],
+                "failure_type": resp["failure_type"],       # Feature 5
+                "type": page_type(url),
+                "visible_text_length": info["visible_text_length"],
+                "visible_text_snippet": info["visible_text_snippet"],
+                "text_stats": info["text_stats"],           # Feature 9
+                "script_size": info["script_size"],
+                "page_size_bytes": resp["content_length"],
+                "title": info["title"],
+                "h1_present": info["h1_present"],           # Feature 7
+                "h1_text": info["h1_text"],                 # Feature 7
+                "has_structured_data": info["has_structured_data"],
+                "jsonld_block_count": info["jsonld_block_count"],
+                "jsonld_raw": info["jsonld_raw"],
+                "meta_robots": info["meta_robots"],
+                "canonical_url": info["canonical_url"],
+            })
+
+        # ---- 5. Render-gap check — Feature 1 ----
         render_result = await render_gap_check(pages_checked)
 
-        # ---- 5. Assemble evidence file ----
+        # ---- 6. Assemble evidence file ----
         succeeded = sum(1 for p in pages_checked if p["status_code"] == 200)
         failed = len(pages_checked) - succeeded
 
+        # How much of the site did we actually see? The analyzer reads this to
+        # decide whether "no X page exists" is provable or a guess.
+        urls_known = max(links_discovered, sitemap_data["url_count"], len(pages_checked))
+
         return {
             "site": site_url,
-            "crawled_at": datetime.datetime.now(datetime.UTC).isoformat() + "Z",
+            "crawled_at": datetime.datetime.now(datetime.UTC).isoformat(),
             "our_agent": OUR_UA,
 
             "robots_txt": {
                 "found": bool(robots_text),
                 "rules_by_agent": rules,
+                "sitemap_urls": robots_sitemaps,            # Feature 8a
             },
+
+            "sitemap": sitemap_data,                        # Feature 8b
+            "llms_txt": llms_data,                          # Feature 8c
 
             "ua_probe": {
                 "url_tested": site_url,
@@ -470,6 +706,14 @@ async def crawl(site_url: str) -> dict:
             "pages_checked": pages_checked,
 
             "render_check": render_result,
+
+            "coverage": {                                   # Feature 8d
+                "links_discovered": links_discovered,
+                "urls_known": urls_known,
+                "pages_sampled": len(pages_checked),
+                "sitemap_url_count": sitemap_data["url_count"],
+                "discovery_method": "sitemap" if sitemap_data["found"] else "homepage_links",
+            },
 
             "crawl_summary": {
                 "pages_attempted": len(pages_checked),
