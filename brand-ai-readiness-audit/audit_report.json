@@ -1,0 +1,106 @@
+{
+  "site": "https://example.com",
+  "audited_at": "2026-09-12T09:01:04.153661+00:00",
+  "skills_run": [
+    "retrievability-checker",
+    "render-gap-audit"
+  ],
+  "summary": {
+    "total_findings": 2,
+    "critical": 0,
+    "high": 0,
+    "medium": 1,
+    "low": 0,
+    "info": 1
+  },
+  "findings": [
+    {
+      "id": "F-001",
+      "title": "No robots.txt found",
+      "severity": "medium",
+      "evidence": "robots_txt.found is false \u2014 no /robots.txt served. Crawlers fall back to default behaviour, and the site has no stated policy on AI access.",
+      "suggested_action": {
+        "summary": "Add a robots.txt that explicitly states which crawlers may access the site. Silence is ambiguous; an explicit allow is not.",
+        "priority": "medium"
+      }
+    },
+    {
+      "id": "F-RG-001",
+      "title": "Render-gap check did not run \u2014 JavaScript dependency unverified",
+      "severity": "info",
+      "evidence": "render_check.status = 'skipped'. Reason: no eligible pages to render",
+      "suggested_action": {
+        "summary": "Install the headless browser and re-run to confirm whether content is JavaScript-dependent.",
+        "priority": "medium",
+        "detail": "Run: pip install playwright && playwright install chromium. Note that `pip install playwright` alone does not download the browser binary; the second command is required. Until this check runs, no conclusion either way can be drawn about JS-dependent content."
+      }
+    }
+  ],
+  "suggested_actions": [
+    {
+      "id": "P-008",
+      "title": "Publish an XML sitemap and reference it from robots.txt",
+      "rationale": "No sitemap was found via robots.txt or at /sitemap.xml. Without one, a crawler can only reach pages that happen to be linked from pages it already has, so anything more than two clicks from the homepage may never be discovered.",
+      "priority": "medium",
+      "effort": "low",
+      "confidence": "high",
+      "evidence_class": "key-absence",
+      "trigger": {
+        "field": "sitemap.found",
+        "condition": "false"
+      }
+    },
+    {
+      "id": "P-007",
+      "title": "Publish an llms.txt orientation file",
+      "rationale": "No /llms.txt was found. The file is a short, machine-readable index pointing crawlers at the canonical pages for the brand rather than making them infer structure from navigation. Adoption is still emerging, but the cost is a single static file.",
+      "priority": "low",
+      "effort": "low",
+      "confidence": "high",
+      "evidence_class": "key-absence",
+      "trigger": {
+        "field": "llms_txt.found",
+        "condition": "false"
+      }
+    },
+    {
+      "id": "P-009",
+      "title": "Add a changelog or insights section that updates on a real cadence",
+      "rationale": "No dateModified or datePublished appears in any structured data block, and no blog, news or changelog section exists among the pages found. Nothing signals that the site is actively maintained. A genuinely-updated page is the honest way to create that signal \u2014 padding dateModified on static pages is detectable and counterproductive. Coverage: all 0 internal links from the homepage were crawled.",
+      "priority": "low",
+      "effort": "medium",
+      "confidence": "high",
+      "evidence_class": "path-absence",
+      "trigger": {
+        "field": "freshness signals",
+        "condition": "absent site-wide"
+      }
+    },
+    {
+      "id": "P-010",
+      "title": "Add a comparison or alternatives page",
+      "rationale": "No comparison, versus or alternatives page was found. Comparison queries are among the highest-volume prompts assistants receive. When a brand does not publish its own comparison, assistants fall back to third-party review sites and competitor pages \u2014 which get cited instead, and frame the comparison unfavourably. Coverage: all 0 internal links from the homepage were crawled.",
+      "priority": "low",
+      "effort": "high",
+      "confidence": "high",
+      "evidence_class": "path-absence",
+      "trigger": {
+        "field": "page families",
+        "condition": "no comparison path"
+      }
+    },
+    {
+      "id": "P-012",
+      "title": "Publish case studies or a named-clients page",
+      "rationale": "No case-study, customer or portfolio page was found. Named engagements are the most reusable corroboration a B2B site can create: they give other sites something specific to reference, and they answer \"who actually uses this\" \u2014 a question assistants are asked constantly and currently cannot answer from this domain. Coverage: all 0 internal links from the homepage were crawled.",
+      "priority": "low",
+      "effort": "medium",
+      "confidence": "high",
+      "evidence_class": "path-absence",
+      "trigger": {
+        "field": "page families",
+        "condition": "no case-study path"
+      }
+    }
+  ]
+}

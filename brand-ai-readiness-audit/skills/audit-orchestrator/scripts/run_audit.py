@@ -163,7 +163,22 @@ def main() -> int:
         print(rec_result.stderr, file=sys.stderr)
         return rec_result.returncode
     
-    print(f"Saved proactive recommendations to: {proactive_path}")
+    # Merge recommendations into the combined report
+    try:
+        recommendations_data = json.loads(proactive_path.read_text(encoding="utf-8"))
+        combined["suggested_actions"] = recommendations_data.get("proactive_recommendations", [])
+    except (json.JSONDecodeError, FileNotFoundError):
+        combined["suggested_actions"] = []
+
+    # Write final single audit report
+    audit_report_path = ROOT / "audit_report.json"
+    audit_report_path.write_text(json.dumps(combined, indent=2), encoding="utf-8")
+    print(f"Saved final audit report to: {audit_report_path}")
+
+    # Clean up intermediate files
+    if evidence_path.exists(): evidence_path.unlink()
+    if findings_path.exists(): findings_path.unlink()
+    if proactive_path.exists(): proactive_path.unlink()
 
     return 0
 
