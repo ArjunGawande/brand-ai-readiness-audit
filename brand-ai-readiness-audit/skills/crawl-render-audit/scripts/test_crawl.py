@@ -47,6 +47,30 @@ class TestCrawlRenderAudit(unittest.TestCase):
         self.assertNotIn("color: red", result["visible_text_snippet"])
         self.assertGreater(result["script_size"], 0)
         self.assertGreater(result["visible_text_length"], 0)
+        self.assertGreater(result["word_count"], 0)
+        self.assertGreaterEqual(result["reading_ease_score"], 0.0)
+        self.assertEqual(result["h2_count"], 0)
+        self.assertEqual(result["cta_count"], 0)
+
+    def test_analyze_html_engagement_elements(self):
+        html_with_elements = """
+        <html>
+        <body>
+            <h1>Main Title</h1>
+            <h2>Section 1</h2>
+            <p>Here is some introductory copy explaining our great service.</p>
+            <h2>Section 2</h2>
+            <p>More details and instructions.</p>
+            <button type="button">Sign Up</button>
+            <a href="/checkout" class="btn btn-primary">Get Started</a>
+        </body>
+        </html>
+        """
+        result = analyze_html(html_with_elements, "https://example.com")
+        self.assertEqual(result["h2_count"], 2)
+        self.assertEqual(result["cta_count"], 2)
+        self.assertEqual(result["outbound_internal_links_count"], 1)
+        self.assertIn("https://example.com/checkout", result["outbound_internal_urls"])
 
     def test_analyze_html_empty_and_missing_tags(self):
         empty_html = "<html><body></body></html>"
@@ -61,6 +85,10 @@ class TestCrawlRenderAudit(unittest.TestCase):
         self.assertEqual(result["jsonld_block_count"], 0)
         self.assertEqual(result["jsonld_raw"], [])
         self.assertEqual(result["visible_text_length"], 0)
+        self.assertEqual(result["word_count"], 0)
+        self.assertEqual(result["reading_ease_score"], 100.0)
+        self.assertEqual(result["h2_count"], 0)
+        self.assertEqual(result["cta_count"], 0)
 
     def test_parse_robots(self):
         robots_txt = """
@@ -97,6 +125,8 @@ class TestCrawlRenderAudit(unittest.TestCase):
             <a href="/products/1#section2">Product 1 Anchor</a>
             <a href="mailto:info@example.com">Mail</a>
             <a href="tel:+1234567890">Phone</a>
+            <a href="/files/whitepaper.pdf">PDF Download</a>
+            <a href="/images/logo.png">Logo Image</a>
         </body>
         </html>
         """
@@ -104,6 +134,8 @@ class TestCrawlRenderAudit(unittest.TestCase):
         self.assertIn("https://example.com/products/1", links)
         self.assertIn("https://example.com/about", links)
         self.assertNotIn("https://otherdomain.com/link", links)
+        self.assertNotIn("https://example.com/files/whitepaper.pdf", links)
+        self.assertNotIn("https://example.com/images/logo.png", links)
         # Should deduplicate without hash
         self.assertEqual(links.count("https://example.com/products/1"), 1)
 

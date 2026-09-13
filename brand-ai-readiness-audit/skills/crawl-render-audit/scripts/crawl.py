@@ -91,10 +91,78 @@ async def fetch(client: httpx.AsyncClient, url: str, ua: str) -> dict:
 
 
 # ---------------------------------------------------------------------------
+# Helpers for content & engagement facts
+# ---------------------------------------------------------------------------
+
+IGNORE_EXTENSIONS = {
+    ".png", ".jpg", ".jpeg", ".gif", ".webp", ".svg", ".ico",
+    ".pdf", ".zip", ".tar", ".gz", ".rar", ".7z",
+    ".css", ".js", ".mjs", ".xml", ".json",
+    ".mp3", ".mp4", ".wav", ".avi", ".mov", ".webm",
+    ".woff", ".woff2", ".ttf", ".eot",
+}
+
+
+def compute_readability(text: str) -> dict:
+    """Compute word count and deterministic Flesch reading ease score without external deps."""
+    words = re.findall(r"\b[a-zA-Z0-9_\']+\b", text)
+    word_count = len(words)
+    if word_count == 0:
+        return {"word_count": 0, "sentence_count": 0, "reading_ease_score": 100.0}
+
+    sentences = re.split(r"[.!?]+", text)
+    sentences = [s.strip() for s in sentences if s.strip()]
+    sentence_count = max(len(sentences), 1)
+
+    def count_syllables(w: str) -> int:
+        w = w.lower()
+        count = len(re.findall(r"[aeiouy]+", w))
+        if w.endswith("e") and not w.endswith("le") and len(w) > 2:
+            count = max(1, count - 1)
+        return max(1, count)
+
+    total_syllables = sum(count_syllables(w) for w in words)
+    score = 206.835 - 1.015 * (word_count / sentence_count) - 84.6 * (total_syllables / word_count)
+    score = round(max(0.0, min(100.0, score)), 1)
+
+    return {
+        "word_count": word_count,
+        "sentence_count": sentence_count,
+        "reading_ease_score": score,
+    }
+
+
+def internal_links(base_url: str, html: str) -> list:
+    tree = HTMLParser(html)
+    seen, links = set(), []
+    parsed_base = urlparse(base_url)
+    for a in tree.css("a[href]"):
+        href = (a.attributes.get("href") or "").strip()
+        if not href or href.startswith(("#", "mailto:", "tel:", "javascript:", "data:")):
+            continue
+        full = urljoin(base_url, href)
+        parsed = urlparse(full)
+        if parsed.scheme not in ("http", "https"):
+            continue
+        if parsed.netloc != parsed_base.netloc:
+            continue
+        path_lower = parsed.path.lower()
+        if any(path_lower.endswith(ext) for ext in IGNORE_EXTENSIONS):
+            continue
+        clean_url = f"{parsed.scheme}://{parsed.netloc}{parsed.path}"
+        if parsed.query:
+            clean_url += f"?{parsed.query}"
+        if clean_url not in seen:
+            seen.add(clean_url)
+            links.append(clean_url)
+    return links
+
+
+# ---------------------------------------------------------------------------
 # HTML analysis
 # ---------------------------------------------------------------------------
 
-def analyze_html(html: str) -> dict:
+def analyze_html(html: str, base_url: str = "") -> dict:
     """Pull out the facts each finding needs from raw HTML."""
     tree = HTMLParser(html)
 
@@ -109,14 +177,21 @@ def analyze_html(html: str) -> dict:
             jsonld_blocks.append(text)
 
     # Feature 7: Check if an <h1> tag exists in raw HTML
-    # WHY: h1 is the primary heading — it tells a crawler "this is the main
-    #       topic of the page" in one line. A page without an h1 forces the
-    #       machine to guess what the page is about from surrounding text.
-    #       Missing h1 is cheap to detect, easy to fix, and directly hurts
-    #       whether an AI can extract a clear primary fact.
     h1_tag = tree.css_first("h1")
     h1_present = h1_tag is not None
     h1_text = h1_tag.text(strip=True) if h1_tag else None
+
+    # H2 subheadings count
+    h2_tags = tree.css("h2")
+    h2_count = len(h2_tags)
+
+    # CTA elements (buttons, inputs, button-styled links)
+    cta_selectors = ["button", "input[type='button']", "input[type='submit']", "a[class*='btn']", "a[class*='cta']"]
+    cta_nodes = set()
+    for sel in cta_selectors:
+        for node in tree.css(sel):
+            cta_nodes.add(node)
+    cta_count = len(cta_nodes)
 
     # Meta robots tag (noindex detection — added as a cheap bonus)
     meta_robots = None
@@ -130,12 +205,17 @@ def analyze_html(html: str) -> dict:
     if canon_tag:
         canonical = canon_tag.attributes.get("href", "")
 
+    # Outbound internal links from this page
+    page_internal_links = internal_links(base_url, html) if base_url else []
+
     # Strip scripts/styles before measuring visible text
     for tag in tree.css("script, style"):
         tag.decompose()
     visible_text = tree.body.text(separator=" ", strip=True) if tree.body else ""
 
     title = tree.css_first("title")
+
+    readability = compute_readability(visible_text)
 
     return {
         "visible_text_length": len(visible_text),
@@ -144,11 +224,17 @@ def analyze_html(html: str) -> dict:
         "title": title.text(strip=True) if title else "",
         "h1_present": h1_present,                      # Feature 7
         "h1_text": h1_text,                            # Feature 7: the actual heading
+        "h2_count": h2_count,
+        "cta_count": cta_count,
         "has_structured_data": len(jsonld_blocks) > 0,
         "jsonld_block_count": len(jsonld_blocks),
         "jsonld_raw": jsonld_blocks,                   # full blocks for the analyzer
         "meta_robots": meta_robots,
         "canonical_url": canonical,
+        "word_count": readability["word_count"],
+        "reading_ease_score": readability["reading_ease_score"],
+        "outbound_internal_links_count": len(page_internal_links),
+        "outbound_internal_urls": page_internal_links,
     }
 
 
@@ -182,18 +268,6 @@ def parse_robots(text: str, agents: list) -> dict:
 def page_type(url: str) -> str:
     path = urlparse(url).path.strip("/")
     return "homepage" if not path else "/" + path.split("/")[0] + "/"
-
-
-def internal_links(base_url: str, html: str) -> list:
-    tree = HTMLParser(html)
-    seen, links = set(), []
-    for a in tree.css("a[href]"):
-        full = urljoin(base_url, a.attributes.get("href") or "")
-        full = full.split("#")[0]
-        if urlparse(full).netloc == urlparse(base_url).netloc and full not in seen:
-            seen.add(full)
-            links.append(full)
-    return links
 
 
 # ---------------------------------------------------------------------------
@@ -385,7 +459,7 @@ async def crawl(site_url: str) -> dict:
 
         # First: the Chrome baseline (what a human sees)
         chrome = await fetch(client, site_url, BROWSER_UA)
-        chrome_info = analyze_html(chrome["body"]) if chrome["ok"] and chrome["status_code"] == 200 else None
+        chrome_info = analyze_html(chrome["body"], site_url) if chrome["ok"] and chrome["status_code"] == 200 else None
         ua_results.append({
             "agent": "chrome_baseline",
             "status_code": chrome["status_code"],
@@ -416,13 +490,15 @@ async def crawl(site_url: str) -> dict:
                 await asyncio.sleep(DELAY_SECONDS)
 
                 if resp["ok"] and resp["status_code"] == 200:
-                    info = analyze_html(resp["body"])
+                    info = analyze_html(resp["body"], url)
                 else:
                     info = {
                         "visible_text_length": 0, "script_size": 0, "title": "",
-                        "h1_present": False, "h1_text": None,
+                        "h1_present": False, "h1_text": None, "h2_count": 0, "cta_count": 0,
                         "has_structured_data": False, "jsonld_block_count": 0, "jsonld_raw": [],
                         "meta_robots": None, "canonical_url": None, "visible_text_snippet": "",
+                        "word_count": 0, "reading_ease_score": 0.0,
+                        "outbound_internal_links_count": 0, "outbound_internal_urls": [],
                     }
 
                 pages_checked.append({
@@ -438,6 +514,12 @@ async def crawl(site_url: str) -> dict:
                     "title": info["title"],
                     "h1_present": info["h1_present"],           # Feature 7
                     "h1_text": info["h1_text"],                 # Feature 7
+                    "h2_count": info.get("h2_count", 0),
+                    "cta_count": info.get("cta_count", 0),
+                    "word_count": info.get("word_count", 0),
+                    "reading_ease_score": info.get("reading_ease_score", 100.0),
+                    "outbound_internal_links_count": info.get("outbound_internal_links_count", 0),
+                    "outbound_internal_urls": info.get("outbound_internal_urls", []),
                     "has_structured_data": info["has_structured_data"],
                     "jsonld_block_count": info["jsonld_block_count"],
                     "jsonld_raw": info["jsonld_raw"],
