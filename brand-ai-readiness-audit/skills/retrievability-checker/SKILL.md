@@ -16,16 +16,20 @@ about structured data or freshness are noise on top of a bigger root cause.
 - Path to the evidence JSON produced by crawl-render-audit
 
 ## Procedure
-1. Check whether the whole crawl was blocked. If so, emit one clear finding
+1. Check whether the whole crawl was blocked (browser-UA fetch of the
+   homepage failed or didn't return 200). If so, emit one clear finding
    about incomplete coverage and skip page-level analysis.
-2. Check robots.txt policy per agent, distinguishing citation-facing crawlers
-   (blocking them removes the brand from answers) from training-only crawlers
-   (blocking them may be deliberate).
-3. Compare the homepage response to a browser vs to GPTBot. Flag differing
-   status codes, or a matching status with far less content.
-4. Flag pages whose content likely only exists after JavaScript runs. Report
-   as a template-wide pattern only when 2+ pages of the same type show it.
+2. Check robots.txt policy for 8 named agents, distinguishing citation-facing
+   crawlers (blocking them removes the brand from answers) from training-only
+   crawlers (blocking them may be deliberate).
+3. Compare the homepage response to a browser vs to GPTBot, PerplexityBot,
+   and ClaudeBot individually. Flag differing status codes, or a matching
+   status with far less content (under 20% of the browser's text).
+4. Flag sampled pages that failed to fetch, and pages marked `noindex`.
 5. Assign sequential ids, count severities, emit the report.
+
+Note: the JavaScript-dependent-content check lives in `render_check`, not
+here — it reads the crawler's `render_check` block directly.
 
 Detailed thresholds and rationale are in `references/checks.md`.
 

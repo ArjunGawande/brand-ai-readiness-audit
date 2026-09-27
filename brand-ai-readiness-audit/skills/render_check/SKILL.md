@@ -101,15 +101,25 @@ from sibling skills without collisions.
 ## Usage
 
 ```bash
-python scripts/crawl.py https://example.com > evidence.json
+python ../crawl-render-audit/scripts/crawl.py https://example.com > evidence.json
 python scripts/analyze_render.py evidence.json
 
 # or piped
-python scripts/crawl.py https://example.com | python scripts/analyze_render.py -
+python ../crawl-render-audit/scripts/crawl.py https://example.com | python scripts/analyze_render.py -
 ```
+
+Note: the crawler lives in the `crawl-render-audit` skill, not in this
+one's `scripts/` folder — this skill only analyzes the evidence it produces.
 
 ## Guardrails
 
 Read-only. No network access, no authenticated actions, no site
 modification. Deterministic: the same evidence file always produces the
 same findings.
+
+## Known issues
+- The skill's frontmatter name is `render-gap-audit`; the folder is
+  `render_check`. `audit-orchestrator` reports it as `render-gap-audit` in
+  `skills_run`.
+- Title-rewrite and h1-added-by-JS findings are reported site-wide, not
+  grouped per template as the rest of this document implies.

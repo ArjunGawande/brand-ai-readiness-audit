@@ -1,0 +1,7 @@
+venv/
+__pycache__/
+*.pyc
+audit_report.json
+proactive.json
+evidence.json
+findings.json

@@ -53,9 +53,11 @@ output — which is what makes it testable offline and safe to re-run.
 
 3. Read `coverage.level` in the output. If it is `low` or `unknown`, the crawl
    could not see enough of the site to support absence claims, and the engine
-   has dropped those rules. Check whether `crawl-render-audit` is emitting the
-   `sitemap`, `llms_txt` and `coverage` blocks — see
-   `scripts/crawl_additions.py`. Without them most of the value here is lost.
+   has dropped those rules. `crawl-render-audit` emits the `sitemap`,
+   `llms_txt` and `coverage` blocks this needs directly — if `coverage` is
+   still coming back `unknown`, check that you're running the current
+   crawler (`skills/crawl-render-audit/scripts/crawl.py`), not an older
+   evidence file.
 4. Read `pending_checks`. Each entry is a rule that could not be evaluated.
    Surface these in the report rather than dropping them silently: "we did not
    check this" is honest, and quietly omitting a check reads as a miss.
@@ -134,5 +136,9 @@ Rules live in `scripts/recommend.py` as small functions returning a dict or
   checkable, "the site appears to lack" is not
 - be registered in the list matching how crawl-dependent its evidence is
 
-See `references/rules.md` for the full rule catalogue, the reasoning behind each
-one, and guidance on what does *not* belong here.
+## Known issues
+- Frontmatter name is `proactive-recommendations`; the folder is
+  `recommendation`.
+- `references/rules.md`, referenced above as the full rule catalogue, does
+  not exist yet — the rule bodies in `scripts/recommend.py` are currently
+  the only documentation for individual rules.
