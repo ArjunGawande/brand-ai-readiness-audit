@@ -1,14 +1,26 @@
 # Brand AI-Readiness Audit
 
-A read-only audit toolkit that answers one question about a website: **can
-AI assistants (ChatGPT, Claude, Perplexity, and their crawlers) actually
-reach it, read it, and cite it correctly?**
+**Is your website actually visible to AI assistants?**
 
-It's built as a marketplace of small skills. One skill crawls the site and
-writes a single evidence file; every other skill reads that file and turns
-it into findings (defects) or recommendations (additions) — none of them
-touch the network themselves. The whole thing runs offline against a
-crawl you did once, so results are deterministic and re-runnable.
+ChatGPT, Claude, and Perplexity don't browse the web the way a human does —
+they depend on crawlers that may be blocked, servers that may respond
+differently to a bot than to a browser, and content that may only exist
+after JavaScript runs. A page that looks perfect in Chrome can be
+completely invisible to the model deciding whether to cite your brand.
+
+This toolkit answers that question with evidence, not guesswork. Point it
+at a URL and it tells you exactly what an AI crawler sees, whether it can
+get in, whether the content is readable without executing JavaScript, and
+whether a visitor landing cold on a deep page — the common case for an
+AI-assistant link — can tell where they are and what to do next.
+
+## How it works
+
+One skill crawls the site once and writes a single evidence file. Every
+other skill reads that file and turns it into findings or recommendations
+— none of them touch the network. That split means the analysis is
+deterministic: the same crawl always produces the same report, and any
+step can be re-run or tuned without hitting the site again.
 
 ```
 crawl-render-audit  →  evidence.json
@@ -26,21 +38,61 @@ retrievability-checker  render_check   engagement_audit
                   audit_report.json
 ```
 
-`audit-orchestrator` runs all of the above in order and writes the final
-report; you can also run any skill on its own against a saved evidence
-file.
+`audit-orchestrator` runs the whole pipeline in one command. Any skill can
+also run standalone against a saved evidence file — useful for iterating
+on a single check without re-crawling.
 
-## Skills
+## What it checks
 
-| Skill | What it does | Reads |
-|---|---|---|
-| [`crawl-render-audit`](brand-ai-readiness-audit/skills/crawl-render-audit/SKILL.md) | The only skill that touches the network. Checks robots.txt, probes the homepage as GPTBot/PerplexityBot/ClaudeBot vs a browser, discovers the sitemap and `llms.txt`, samples up to 12 internal pages (headings, calls to action, structured data, link graph), and renders a sample with headless Chromium to compare raw vs JS-rendered content. | the live site |
-| [`retrievability-checker`](brand-ai-readiness-audit/skills/retrievability-checker/SKILL.md) | Can AI bots get in and read something? Flags robots.txt blocks (by role: citation vs training bots), servers that treat bots differently from browsers, broken sampled links, and `noindex` pages. | `evidence.json` |
-| [`render_check`](brand-ai-readiness-audit/skills/render_check/SKILL.md) | Is the content actually there without JavaScript? Compares raw HTML to the browser-rendered DOM for body text, JSON-LD, title, and h1, grouped by page template. | `evidence.json` |
-| [`engagement_audit`](brand-ai-readiness-audit/skills/engagement_audit/SKILL.md) | Would a visitor landing cold on a deep page (the common case for an AI-assistant link) know where they are and what to do? 14 rules covering headings, breadcrumbs, calls to action, thin/boilerplate content, popups, mobile viewport, image alt text, and orphan pages. | `evidence.json` |
-| [`recommendation`](brand-ai-readiness-audit/skills/recommendation/SKILL.md) | Proactive additions, not defects — `sameAs` corroboration links, Service/Product schema, a complete address, `llms.txt`, comparison and case-study pages, a freshness signal. Deduplicates against the findings the other skills already raised, and drops absence claims the crawl sample can't actually support. | `evidence.json` + merged findings |
-| [`audit-orchestrator`](brand-ai-readiness-audit/skills/audit-orchestrator/SKILL.md) | Entry point. Runs the four skills above in order and merges their output into one `audit_report.json`. | — (orchestrates the rest) |
-| [`freshness-corroboration`](brand-ai-readiness-audit/skills/freshness-corroboration/SKILL.md) | **Not implemented.** Documented for what it was meant to do, why it currently duplicates parts of `recommendation`, and what it would take to build. | — |
+**Can AI bots reach the site?**
+Fetches `/robots.txt` and evaluates policy for 8 named agents — GPTBot,
+ClaudeBot, PerplexityBot, OAI-SearchBot, ChatGPT-User, Claude-User, CCBot,
+and Google-Extended — distinguishing bots that feed live citations from
+bots that feed model training, since blocking one is a very different
+decision from blocking the other. Then it probes the homepage as each of
+GPTBot, PerplexityBot, and ClaudeBot alongside a real browser, catching
+the cases robots.txt alone can't: a WAF or bot-management layer that
+serves a stripped or challenge response to a bot even though robots.txt
+says it's allowed.
+
+**Can it read the content without running JavaScript?**
+Most AI crawlers don't execute JavaScript. This toolkit renders a sample
+of pages with headless Chromium and diffs the result against the raw
+HTML — comparing visible text, JSON-LD structured data, the page title,
+and the h1 — so a React or Next.js app that quietly moved its content
+behind a client-side fetch gets caught before an assistant ever notices
+it's missing.
+
+**Would a visitor (or the assistant summarizing for one) know what to do?**
+An AI assistant links directly to a deep page, not your homepage. Fourteen
+checks measure whether that landing page gives a cold visitor enough to
+orient: a clear heading structure, a breadcrumb trail, a next action,
+substantive content that isn't buried in navigation chrome, images with
+alt text, and a mobile viewport — plus a link graph that flags pages
+nothing else on the site links to.
+
+**What would make the brand easier to cite correctly?**
+Beyond fixing defects, the toolkit looks for what's missing that assistants
+specifically reward: `sameAs` links that corroborate the brand's identity
+against independent sources, Service/Product/Offer schema that states
+machine-readably what's actually being sold, a complete address and
+contact point, an `llms.txt` orientation file, comparison pages, and named
+case studies. Every recommendation is tied to a real number from the
+crawl — "3 of 3 crawled pages" — never a vague impression, and claims that
+the crawl sample can't actually support (like "no pricing page exists
+anywhere on the site") are automatically downgraded or dropped rather than
+risk a false positive.
+
+## The pipeline
+
+| Skill | Role |
+|---|---|
+| [`crawl-render-audit`](brand-ai-readiness-audit/skills/crawl-render-audit/SKILL.md) | Crawls the site: robots.txt, bot-vs-browser probing, sitemap and `llms.txt` discovery, a page sample with full engagement and structured-data extraction, a link graph, and Playwright-based render comparison. The only skill that touches the network. |
+| [`retrievability-checker`](brand-ai-readiness-audit/skills/retrievability-checker/SKILL.md) | Access and infrastructure findings: robots.txt blocks, server-level bot discrimination, broken links, noindex pages. |
+| [`render_check`](brand-ai-readiness-audit/skills/render_check/SKILL.md) | JavaScript-dependency findings: content, structured data, titles, and headings that only appear after rendering. |
+| [`engagement_audit`](brand-ai-readiness-audit/skills/engagement_audit/SKILL.md) | Cold-landing UX findings: headings, orientation, calls to action, content density, friction, and orphan pages. |
+| [`recommendation`](brand-ai-readiness-audit/skills/recommendation/SKILL.md) | Proactive, coverage-gated suggestions for AI discoverability — entity corroboration, schema, `llms.txt`, comparison and case-study content. |
+| [`audit-orchestrator`](brand-ai-readiness-audit/skills/audit-orchestrator/SKILL.md) | Entry point. Runs the pipeline end to end and merges everything into one report. |
 
 ## Setup
 
@@ -62,73 +114,59 @@ source venv/bin/activate
 python run_audit.py https://example.com
 ```
 
-Writes `audit_report.json` (merged findings + suggested actions) and
-`proactive.json` (the raw recommendation output, including coverage info)
-to the current directory.
-
-To keep the intermediate evidence and findings files instead of having
-them deleted when the run finishes:
+Writes `audit_report.json` (merged findings + suggested actions) to the
+current directory.
 
 ```bash
 python run_audit.py https://example.com \
-  --evidence-file /tmp/evidence.json \
-  --findings-file /tmp/findings.json
+  --evidence-file evidence.json \
+  --findings-file findings.json
 ```
 
-## Run one skill at a time
+## Run a single skill
 
-Useful for inspecting an intermediate step, or re-running just the
-analysis after tweaking a threshold — none of these steps re-crawl the site.
+Each analyzer is a pure function of the evidence file, so you can inspect,
+tune, or re-run one step without re-crawling:
 
 ```bash
-# 1. crawl once, save the evidence
+# crawl once, save the evidence
 python skills/crawl-render-audit/scripts/crawl.py https://example.com > evidence.json
 
-# 2. run any analyzer against the same evidence file
+# run any analyzer against the same evidence file, as many times as you like
 python skills/retrievability-checker/scripts/check_retrievability.py evidence.json
 python skills/render_check/scripts/analyze_render.py evidence.json
 python skills/engagement_audit/engagement_audit.py evidence.json
 python skills/recommendation/scripts/recommend.py evidence.json --findings findings.json --out proactive.json
 ```
 
-## Evidence file
+## Sample finding
 
-`crawl-render-audit` is the single source of truth every other skill reads.
-Top-level keys: `robots_txt`, `ua_probe`, `sitemap`, `llms_txt`,
-`pages_checked` (each with `engagement`, `links`, `text_stats`, `jsonld_raw`),
-`link_graph`, `render_check`, `coverage`, `crawl_summary`. Full shape is in
-[`crawl-render-audit/SKILL.md`](brand-ai-readiness-audit/skills/crawl-render-audit/SKILL.md#output).
+```json
+{
+  "id": "F-RG-001",
+  "title": "Primary content requires JavaScript to appear",
+  "severity": "critical",
+  "evidence": "Template 'product': sampled 2/2 pages, 93% of visible content is JS-only.",
+  "suggested_action": {
+    "summary": "Server-render the primary content, or provide a pre-rendered fallback.",
+    "priority": "critical"
+  },
+  "affected_pages": ["https://example.com/products/widget"]
+}
+```
 
-## Design conventions
+## Design principles
 
-- **Measure vs. judge.** Only `crawl-render-audit` fetches pages. Every
-  analyzer is a pure function of the evidence file — same input, same
-  output, every time. This is what makes the pipeline testable offline.
-- **Findings vs. recommendations.** A finding is a defect: it has
-  `evidence` and `severity`, and something is actually broken. A
-  recommendation is an addition: it has `rationale`, `priority`, and
-  `effort`, and nothing is broken — the site just doesn't have it yet.
-  Keeping the vocabulary separate stops "no FAQ page" from being dressed
-  up as a medium-severity bug.
-- **Coverage gates absence claims.** `recommendation` only says "no X
-  exists anywhere on the site" when the crawl sample can actually support
-  that claim (full sitemap coverage, or an exhausted homepage link graph).
-  Otherwise the claim is downgraded or dropped rather than risk a false
-  positive a reader can disprove in one click.
-
-## Known issues
-
-- `audit-orchestrator` deletes the evidence/findings files when it
-  finishes, even when you passed `--evidence-file`/`--findings-file` to
-  keep them — capture your own copy if you need it (see "Run one skill at
-  a time" above, or pass separate output paths and copy them out before
-  the orchestrator's cleanup runs).
-- `freshness-corroboration` is unimplemented and not called by the
-  orchestrator; see its own SKILL.md for why and what overlaps with
-  `recommendation`.
-- Folder names and skill frontmatter `name:` don't always match
-  (`render_check` ↔ `render-gap-audit`, `recommendation` ↔
-  `proactive-recommendations`, `engagement_audit` ↔ `engagement-audit`).
-  Each skill's own SKILL.md notes this under "Known issues" where relevant.
-- The `recommendation` skill's `references/rules.md`, referenced from its
-  SKILL.md as the full rule catalogue, doesn't exist yet.
+- **Measure, then judge, separately.** Only the crawler fetches pages;
+  every analyzer is a deterministic function of the evidence file. Same
+  input, same output, every time — which makes results reproducible and
+  the whole pipeline testable offline.
+- **Findings are defects; recommendations are additions.** A finding
+  carries `evidence` and `severity` because something is broken. A
+  recommendation carries `rationale`, `priority`, and `effort` because
+  nothing is broken — the site simply doesn't have it yet. Keeping the two
+  vocabularies apart keeps "no FAQ page" from being dressed up as a bug.
+- **No claim outruns the evidence.** Absence claims ("no comparison page
+  exists anywhere on the site") are only made when the crawl sample can
+  actually support them — full sitemap coverage, or an exhausted homepage
+  link graph. Otherwise they're downgraded or dropped.
