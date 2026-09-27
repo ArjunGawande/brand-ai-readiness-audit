@@ -12,6 +12,7 @@ CRAWLER_PATH = ROOT / "skills" / "crawl-render-audit" / "scripts" / "crawl.py"
 CHECKER_PATH = ROOT / "skills" / "retrievability-checker" / "scripts" / "check_retrievability.py"
 RENDER_CHECK_PATH = ROOT / "skills" / "render_check" / "scripts" / "analyze_render.py"
 RECOMMEND_PATH = ROOT / "skills" / "recommendation" / "scripts" / "recommend.py"
+ENGAGEMENT_AUDIT_PATH = ROOT / "skills" / "engagement_audit" / "engagement_audit.py"
 
 
 def resolve_python() -> str:
@@ -59,7 +60,7 @@ def main() -> int:
     evidence_path.parent.mkdir(parents=True, exist_ok=True)
     findings_path.parent.mkdir(parents=True, exist_ok=True)
 
-    print(f"[1/4] Running crawler for {target_url}...")
+    print(f"[1/5] Running crawler for {target_url}...")
     crawl_result = subprocess.run(
         [python_executable, str(CRAWLER_PATH), target_url],
         capture_output=True,
@@ -80,7 +81,7 @@ def main() -> int:
         print(f"Crawler exited with code {crawl_result.returncode}.", file=sys.stderr)
         return crawl_result.returncode
 
-    print(f"[2/4] Running retrievability check against {evidence_path}...")
+    print(f"[2/5] Running retrievability check against {evidence_path}...")
     check_result = subprocess.run(
         [python_executable, str(CHECKER_PATH), str(evidence_path)],
         capture_output=True,
@@ -93,7 +94,7 @@ def main() -> int:
         print(check_result.stderr, file=sys.stderr)
         return check_result.returncode
 
-    print(f"[3/4] Running render gap check against {evidence_path}...")
+    print(f"[3/5] Running render gap check against {evidence_path}...")
     render_result = subprocess.run(
         [python_executable, str(RENDER_CHECK_PATH), str(evidence_path)],
         capture_output=True,
@@ -120,26 +121,47 @@ def main() -> int:
         print(render_result.stdout, file=sys.stderr)
         render_data = {}
 
-    combined_findings = retrievability_data.get("findings", []) + render_data.get("findings", [])
+    print(f"[4/5] Running engagement audit against {evidence_path}...")
+    engagement_result = subprocess.run(
+        [python_executable, str(ENGAGEMENT_AUDIT_PATH), str(evidence_path)],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+
+    if engagement_result.returncode != 0:
+        print(f"Engagement audit exited with code {engagement_result.returncode}.", file=sys.stderr)
+        print(engagement_result.stderr, file=sys.stderr)
+        return engagement_result.returncode
+
+    try:
+        engagement_data = json.loads(engagement_result.stdout) if engagement_result.stdout.strip() else {}
+    except json.JSONDecodeError:
+        print("Failed to parse engagement audit findings as JSON.", file=sys.stderr)
+        print(engagement_result.stdout, file=sys.stderr)
+        engagement_data = {}
+
+    combined_findings = retrievability_data.get("findings", []) + render_data.get("findings", []) + engagement_data.get("findings", [])
     
     summary1 = retrievability_data.get("summary", {})
     summary2 = render_data.get("summary", {})
+    summary3 = engagement_data.get("summary", {})
     
     combined_summary = {
-        "total_findings": summary1.get("total_findings", 0) + summary2.get("total_findings", 0),
-        "critical": summary1.get("critical", 0) + summary2.get("critical", 0),
-        "high": summary1.get("high", 0) + summary2.get("high", 0),
-        "medium": summary1.get("medium", 0) + summary2.get("medium", 0),
-        "low": summary1.get("low", 0) + summary2.get("low", 0),
-        "info": summary1.get("info", 0) + summary2.get("info", 0),
+        "total_findings": summary1.get("total_findings", 0) + summary2.get("total_findings", 0) + summary3.get("total_findings", 0),
+        "critical": summary1.get("critical", 0) + summary2.get("critical", 0) + summary3.get("critical", 0),
+        "high": summary1.get("high", 0) + summary2.get("high", 0) + summary3.get("high", 0),
+        "medium": summary1.get("medium", 0) + summary2.get("medium", 0) + summary3.get("medium", 0),
+        "low": summary1.get("low", 0) + summary2.get("low", 0) + summary3.get("low", 0),
+        "info": summary1.get("info", 0) + summary2.get("info", 0) + summary3.get("info", 0),
     }
 
-    combined_notes = retrievability_data.get("coverage_notes", []) + render_data.get("coverage_notes", [])
+    combined_notes = retrievability_data.get("coverage_notes", []) + render_data.get("coverage_notes", []) + engagement_data.get("coverage_notes", [])
 
     combined = {
-        "site": retrievability_data.get("site") or render_data.get("site"),
-        "audited_at": retrievability_data.get("audited_at") or render_data.get("analyzed_from"),
-        "skills_run": ["retrievability-checker", "render-gap-audit"],
+        "site": retrievability_data.get("site") or render_data.get("site") or engagement_data.get("site"),
+        "audited_at": retrievability_data.get("audited_at") or render_data.get("analyzed_from") or engagement_data.get("audited_at"),
+        "skills_run": ["retrievability-checker", "render-gap-audit", "engagement-audit"],
         "summary": combined_summary,
         "findings": combined_findings,
     }
@@ -150,7 +172,7 @@ def main() -> int:
     print(f"Saved combined findings to: {findings_path}")
 
     proactive_path = ROOT / "proactive.json"
-    print(f"[4/4] Generating proactive recommendations...")
+    print(f"[5/5] Generating proactive recommendations...")
     rec_result = subprocess.run(
         [python_executable, str(RECOMMEND_PATH), str(evidence_path), "--findings", str(findings_path), "--out", str(proactive_path)],
         capture_output=True,
